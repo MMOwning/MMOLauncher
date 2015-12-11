@@ -1,0 +1,9 @@
+{
+  "name": "MMOwning",
+  "productName": "MMOwning Launcher",
+  "identifier": "com.mmowning.launcher",
+  "description": "MMOwning Server Launcher and Development System.",
+  "version": "0.1.0",
+  "author": "LORDofDOOM <lordofdoom.de@googlemail.com>",
+  "main": "main.js",
+}

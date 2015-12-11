@@ -1,0 +1,16 @@
+{
+  "name": "MMOwning",
+  "productName": "MMOwning Launcher",
+  "identifier": "com.mmowning.launcher",
+  "description": "MMOwning Server Launcher and Development System.",
+  "version": "0.1.0",
+  "author": "LORDofDOOM <lordofdoom.de@googlemail.com>",
+  "main": "main.js",
+  "dependencies": {
+    "jquery": "^2.1.4",
+	"bootstrap": "^3.3.6",
+	"always-tail": "^0.2.0",
+	"electron-edge": "^4.0.1-pre1",
+	"electron-prebuilt": "^0.35.4"
+  }
+}

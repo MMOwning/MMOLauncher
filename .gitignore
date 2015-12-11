@@ -1,0 +1,17 @@
+node_modules
+*.log
+.DS_Store
+Thumbs.db
+
+/bin/mariadb/
+/bin/nginx/
+/bin/php/
+/bin/sciprtcs/
+/bin/trinitycore/
+
+/release/
+/devel/
+/logs/*
+/www/
+/mmowning/
+!/mmowning/start_cmake.bat
