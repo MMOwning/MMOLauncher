@@ -141,9 +141,111 @@
             </section><!-- /.Left col -->
 
           </div><!-- /.row (main row) -->
+
 		  
 		  
 		  
+<script>
+(function($){
+	$(document).ready(function () {
+
+		$('.qTip').each(function() { // Notice the .each() loop, discussed below
+			$(this).qtip({
+				content: {
+					title: $(this).attr('title'),
+					text: $(this).next('div') // Use the "div" element next to this for the content
+				},
+				position: {
+					my: 'left center',  // Position my top left...
+					at: 'right center', // at the bottom right of...
+				},
+				style: {
+					classes: 'qtip-shadow qtip-bootstrap',
+					tip: {
+						corner: true, // Use position.my by default
+						//mimic: false, // Don't mimic a particular corner
+						width: 15,
+						height: 10,
+						//border: true, // Detect border from tooltip style
+						offset: 10 // Do not apply an offset from corner
+					}
+				},
+
+			});
+		});
+	}); // End document ready
+})(this.jQuery);
+
+$('#rebuildMMOCore').on('click', function(e){
+    e.preventDefault();
+    $('#confirm').modal({ backdrop: 'static', keyboard: false })
+        .one('click', '#delete', function() {
+            //$form.trigger('submit'); // submit the form
+        });
+        // .one() is NOT a typo of .on()
+});
+
+showConfirmation = function(title, message, success, cancel) {
+    title = title ? title : 'Are you sure?';
+    var modal = $("#main_confirmation");
+    modal.find(".modal-title").html(title).end()
+        .find(".modal-body").html(message).end()
+        .modal({ backdrop: 'static', keyboard: false })
+        .on('hidden.bs.modal', function () {
+        modal.unbind();
+    });
+    if (success) {
+        modal.one('click', '.modal-footer .btn-primary', success);
+    }
+    if (cancel) {
+        modal.one('click', '.modal-header .close, .modal-footer .btn-default', cancel);
+    }
+};
+
+$('#develBuildMMOCore').on('click', function(e){
+    event.preventDefault();
+    var self = $(this);
+    var url = $(this).data('url');
+    var success = function(){
+		edgeRunProcess({"exeFile": "bin\\sciprtcs\\scriptcs.exe", "exeFileParameter": "bin\\compile_trinity.csx"}, function (error, result) {
+			if (error) throw error;
+			console.log(result);
+		});
+    }
+    var cancel = function(){
+        alert('Cancel');
+    };
+    if (self.data('confirmation')) {
+        var title = self.data('confirmation-title') ? self.data('confirmation-title') : undefined;
+        var message = self.data('confirmation');
+        showConfirmation(title, message, success, cancel);
+    } else {
+        success();
+    }
+});
+
+$('#develImportDatabase').on('click', function(e){
+    event.preventDefault();
+    var self = $(this);
+    var url = $(this).data('url');
+    var success = function(){
+		edgeRunProcessWindow({"exeFile": "bin\\sciprtcs\\scriptcs.exe", "exeFileParameter": "bin\\install_database.csx"}, function (error, result) {
+			if (error) throw error;
+			console.log(result);
+		});
+    }
+    var cancel = function(){
+        alert('Cancel');
+    };
+    if (self.data('confirmation')) {
+        var title = self.data('confirmation-title') ? self.data('confirmation-title') : undefined;
+        var message = self.data('confirmation');
+        showConfirmation(title, message, success, cancel);
+    } else {
+        success();
+    }
+});
+</script>
 		  
 		  
-	
+		  
