@@ -77,28 +77,54 @@ function iboxTools($timeout) {
 function minimalizaSidebar($timeout) {
     return {
         restrict: 'A',
-        template: '<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="" ng-click="minimalize()"><i class="fa fa-bars"></i></a>',
+        template: '<a class="sidebar-toggle" " href="" ng-click="minimalize()"></a><span class="sr-only">Toggle navigation</span>',
         controller: function ($scope, $element) {
             $scope.minimalize = function () {
-                $("body").toggleClass("mini-navbar");
-                if (!$('body').hasClass('mini-navbar') || $('body').hasClass('body-small')) {
-                    // Hide menu in order to smoothly turn on when maximize menu
-                    $('#side-menu').hide();
-                    // For smoothly turn on menu
-                    setTimeout(
-                        function () {
-                            $('#side-menu').fadeIn(500);
-                        }, 100);
-                } else if ($('body').hasClass('fixed-sidebar')){
-                    $('#side-menu').hide();
-                    setTimeout(
-                        function () {
-                            $('#side-menu').fadeIn(500);
-                        }, 300);
-                } else {
-                    // Remove all inline style from jquery fadeIn function to reset menu state
-                    $('#side-menu').removeAttr('style');
-                }
+				
+			var screenSizes = $.AdminLTE.options.screenSizes;
+			//Enable sidebar push menu
+			if ($(window).width() > (screenSizes.sm - 1)) {
+			  if ($("body").hasClass('sidebar-collapse')) {
+				$("body").removeClass('sidebar-collapse').trigger('expanded.pushMenu');
+			  } else {
+				$("body").addClass('sidebar-collapse').trigger('collapsed.pushMenu');
+			  }
+			}
+			//Handle sidebar push menu for small screens
+			else {
+			  if ($("body").hasClass('sidebar-open')) {
+				$("body").removeClass('sidebar-open').removeClass('sidebar-collapse').trigger('collapsed.pushMenu');
+			  } else {
+				$("body").addClass('sidebar-open').trigger('expanded.pushMenu');
+			  }
+			}				
+
+            }
+        }
+    };
+};
+
+function controlSidebar($timeout) {
+    return {
+        restrict: 'A',
+        template: '<a href="#" ng-click="showhide()" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>',
+        controller: function ($scope, $element) {
+            $scope.showhide = function () {
+				//$.AdminLTE.controlSidebar.open(".control-sidebar");
+
+			var sidebar = $(".control-sidebar");
+			var o = $.AdminLTE.options.controlSidebarOptions;
+			
+        //If the sidebar is not open
+        if (!sidebar.hasClass('control-sidebar-open')
+                && !$('body').hasClass('control-sidebar-open')) {
+          //Open the sidebar
+          $.AdminLTE.controlSidebar.open(sidebar, o.slide);
+        } else {
+          $.AdminLTE.controlSidebar.close(sidebar, o.slide);
+        }
+
+	
             }
         }
     };
@@ -159,4 +185,5 @@ angular
     .directive('sideNavigation', sideNavigation)
     .directive('iboxTools', iboxTools)
     .directive('minimalizaSidebar', minimalizaSidebar)
+	.directive('controlSidebar', controlSidebar)
     .directive('iboxToolsFullScreen', iboxToolsFullScreen);
