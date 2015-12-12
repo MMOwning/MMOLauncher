@@ -1,0 +1,149 @@
+
+		
+		
+          <div class="row animated fadeInRight">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="info-box">
+				<span id="topboxAuthServerBadge" class="badge bg-green hidden">running</span>
+                <span id="topboxAuthServer"  class="info-box-icon bg-red"><i class="fa fa-github"></i></span>
+                <div class="info-box-content">
+					<span>Authserver</span>
+					<span id="topboxAuthServerText" class="info-box-number">
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('bin\\trinitycore\\authserver.conf');"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<div style="display: none;">Open authserver.config</div>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('bin\\trinitycore\\Auth.log');"><i class="fa fa-file-text-o"></i> Log</a>
+						<div style="display: none;">Open authserver.config</div>						
+					</span>
+					<a id="topboxAuthServerBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startAuthserver()">
+						<i class="fa fa-play"></i> Start
+					</a>					  
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="info-box">
+				<span id="topboxWorldServerBadge" class="badge bg-green hidden">running</span>
+                <span id="topboxWorldServer"  class="info-box-icon bg-red"><i class="fa fa-github"></i></span>
+                <div class="info-box-content">
+					<span>Worldserver</span>
+					<span id="topboxWorldServerText" class="info-box-number">
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('bin\\trinitycore\\worldserver.conf');"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<div style="display: none;">Open authserver.config</div>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('bin\\trinitycore\\Server.log');"><i class="fa fa-file-text-o"></i> Log</a>
+						<div style="display: none;">Open authserver.config</div>						
+					</span>
+					<a id="topboxWorldServerBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startWorldserver()">
+						<i class="fa fa-play"></i> Start
+					</a>					  
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="info-box">
+				<span id="topboxMySQLBadge" class="badge bg-green hidden">running</span>
+                <span id="topboxMySQL"  class="info-box-icon bg-red"><i class="fa fa-database"></i></span>
+                <div class="info-box-content">
+					<span>MySQL&nbsp;<span id="topboxMySQLVersion"></span></span>
+					<span id="topboxMySQLText" class="info-box-number">
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('bin\\mariadb\\my.ini');"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<div style="display: none;">Open authserver.config</div>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('logs\\mariadb_error.log');"><i class="fa fa-file-text-o"></i> Log</a>
+						<div style="display: none;">Open authserver.config</div>						
+					</span>					
+					<a id="topboxMySQLBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startMySQL()">
+						<i class="fa fa-play"></i> Start
+					</a>					  
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="info-box">
+				<span id="topboxWebserverBadge" class="badge bg-green hidden">running</span>
+                <span id="topboxWebserver"  class="info-box-icon bg-red"><i class="fa fa-globe"></i></span>
+                <div class="info-box-content">
+					<span>Webserver&nbsp;<span id="topboxWebserverVersion"></span></span>
+					<span id="topboxWebserverText" class="info-box-number">
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('bin\\nginx\\conf\\nginx.conf');"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<div style="display: none;">Open authserver.config</div>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('logs\\access.log');"><i class="fa fa-file-text-o"></i> Access Log&nbsp;</a>
+						<div style="display: none;">Open authserver.config</div>	
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('logs\\error.log');"><i class="fa fa-bug"></i> Error Log&nbsp;</a>
+						<div style="display: none;">Open authserver.config</div>	
+					</span>					
+					<a id="topboxWebserverBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startWebserver()">
+						<i class="fa fa-play"></i> Start
+					</a>					  
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+              <div class="info-box">
+				<span id="topboxPhpBadge" class="badge bg-green hidden">running</span>
+                <span id="topboxPhp"  class="info-box-icon bg-red"><i class="fa fa-globe"></i></span>
+                <div class="info-box-content">
+					<span>PHP&nbsp;<span id="topboxPhpVersion"></span></span>
+					<span id="topboxPhpText" class="info-box-number">
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('bin\\php\\php.ini');"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<div style="display: none;">Open authserver.config</div>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="openTextFile('logs\\php_error.log');"><i class="fa fa-bug"></i> Error Log&nbsp;</a>
+						<div style="display: none;">Open authserver.config</div>						
+					</span>					
+					<a id="topboxPhpBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startPhp()">
+						<i class="fa fa-play"></i> Start
+					</a>					  
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+            </div><!-- /.col -->			
+			
+          </div><!-- /.row -->		
+
+          <!-- Main row -->
+          <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-12">
+              <!-- Custom tabs (Charts with tabs)-->
+              <div class="nav-tabs-custom">
+                <!-- Tabs within a box -->
+                <ul class="nav nav-tabs pull-right">
+                  <li class="active"><a href="#worldserverCmdLine" data-toggle="tab">Worldserver</a></li>
+				  <li><a href="#authserverCmdLine" data-toggle="tab">Authserver</a></li>
+                  <li><a href="#nginxCmdLine" data-toggle="tab">WebServer</a></li>
+				  <li><a href="#mysqlCmdLine" data-toggle="tab">MySQL</a></li>
+                  <li class="pull-left header"><i class="fa fa-file-text-o"></i> Logging</li>
+                </ul>
+                <div class="tab-content no-padding">
+                  <!-- Morris chart - Sales -->
+				  
+                  <div class="chart tab-pane active" id="worldserverCmdLine" style="position: relative; height: 400px;">	
+					<div id="worldserverCmdLineInner" style="position: relative; height: 100%; overflow-y: scroll;margin-left: 10px;">
+					</div>		
+				  </div>
+				  
+                  <div class="chart tab-pane" id="authserverCmdLine" style="position: relative; height: 300px;">	
+					<div id="authserverCmdLineInner" style="position: relative; height: 100%; overflow-y: scroll;margin-left: 10px;">
+					</div>		
+				  </div>				  
+				  
+                  <div class="chart tab-pane" id="nginxCmdLine" style="position: relative; height: 300px;">
+					<div id="nginxCmdLineInner" style="position: relative; height: 100%; overflow-y: scroll;margin-left: 10px;">
+					</div>							
+				  </div>
+				  
+                  <div class="chart tab-pane" id="mysqlCmdLine" style="position: relative; height: 300px;">
+					<div id="mysqlCmdLineInner" style="position: relative; height: 100%; overflow-y: scroll;margin-left: 10px;">
+					</div>						
+				  </div>
+				  
+                </div>
+              </div><!-- /.nav-tabs-custom -->
+
+
+            </section><!-- /.Left col -->
+
+          </div><!-- /.row (main row) -->
+		  
+		  
+		  
+		  
+		  
+	
