@@ -1,11 +1,3 @@
-var exec = require('child_process').exec;
-var spawn = require('child_process').spawn;
-var edge = require('electron-edge');
-
-//Setup Tail
-var Tail = require('always-tail');
-var fs = require('fs');
-
 var worldserverLogFile = "bin/trinitycore/Server.log";
 var worldserverTail = "";
 
@@ -50,69 +42,25 @@ function tailAuthserver() {
 
 //worldserverTail.unwatch();
 	
-var checkProcess = edge.func(function () {/*
-	async (input) => 
-	{
-		using System.Diagnostics;
-		Process[] processlist = Process.GetProcesses();
-		
-		bool nginx_status = false;
-		bool mysql_status = false;
-		bool php_status = false;
-		bool worldserver_status = false;
-		bool authserver_status = false;
-		
-		foreach(Process theprocess in processlist){
-			//Console.WriteLine("Process: {0} ID: {1}", theprocess.ProcessName, theprocess.Id);
-			if(theprocess.ProcessName == "nginx")
-			{
-				nginx_status = true;
-			}
-			if(theprocess.ProcessName == "mysqld")
-			{
-				mysql_status = true;
-			}		
-			if(theprocess.ProcessName == "php-cgi")
-			{
-				php_status = true;
-			}	
-			if(theprocess.ProcessName == "worldserver")
-			{
-				worldserver_status = true;
-			}
-			if(theprocess.ProcessName == "authserver")
-			{
-				authserver_status = true;
-			}	
-		}	
-		var result = new {
-			nginx = nginx_status,
-			mysql = mysql_status,
-			php = php_status,
-			worldserver = worldserver_status,
-			authserver = authserver_status,
-		};
-		return result;
-	}
-*/});
+var process_status = {};
+process_status['nginx_status'] = false;
+process_status['mysql_status'] = false;
+process_status['php_status'] = false;
+process_status['worldserver_status'] = false;
+process_status['authserver_status'] = false;
 
-/* --------------------------------------------------------------------------------------------------------	*/
-/* Get Running processes																					*/
-/* --------------------------------------------------------------------------------------------------------	*/
-var nginx_status = false;
-var mysql_status = false;
-var php_status = false;
-var worldserver_status = false;
-var authserver_status = false;
-		
-$(window).load(function () {
-	setInterval(function(){
-		checkProcess(null, function (error, result) {
-			if (error) throw error;
-			
-			//console.log(result);
-			
-			if (result.nginx == true)
+function checkRunningApps() {
+	$.ajax({
+		url : getBackEndPath + '/checkRunningPrograms',
+		type : 'get',
+		dataType : 'json',
+		success : function(data) {
+			//console.log(process_status);
+			process_status = data;
+			//console.log(process_status);
+			//console.log(data.mysql_status)
+
+			if (process_status['nginx_status'] == true)
 			{
 				//$("#topboxWebserverText").text("Running");
 				$("#topboxWebserverBadge").removeClass("hidden");
@@ -121,14 +69,6 @@ $(window).load(function () {
 				$("#topboxWebserverBtn").html('<i class="fa fa-stop"></i> Stop');
 				$("#topboxWebserver").removeClass("bg-red");
 				$("#topboxWebserver").addClass("bg-green");
-				if (webserver_version == "0.0.0.0")
-				{
-					getNginxVersion();
-				}
-				if (nginx_status == false)
-				{
-					nginx_status = true;
-				}
 			} else {
 				//$("#topboxWebserverText").text("Not running");
 				$("#topboxWebserverBadge").addClass("hidden");
@@ -136,14 +76,10 @@ $(window).load(function () {
 				$("#topboxWebserverBtn").addClass("btn-success");
 				$("#topboxWebserverBtn").html('<i class="fa fa-play"></i> Start');
 				$("#topboxWebserver").removeClass("bg-green");
-				$("#topboxWebserver").addClass("bg-red");
-				if (nginx_status == true)
-				{
-					nginx_status = false;
-				}				
+				$("#topboxWebserver").addClass("bg-red");			
 			}
 			
-			if (result.php == true)
+			if (process_status['php_status'] == true)
 			{
 				//$("#topboxPhpText").text("Running");
 				$("#topboxPhpBadge").removeClass("hidden");
@@ -151,15 +87,7 @@ $(window).load(function () {
 				$("#topboxPhpBtn").addClass("btn-danger");
 				$("#topboxPhpBtn").html('<i class="fa fa-stop"></i> Stop');
 				$("#topboxPhp").removeClass("bg-red");
-				$("#topboxPhp").addClass("bg-green");
-				if (getPhpVersion == "0.0.0.0")
-				{
-					getPhpVersion();		
-				}
-				if (php_status == false)
-				{
-					php_status = true;
-				}				
+				$("#topboxPhp").addClass("bg-green");			
 			} else {
 				//$("#topboxPhpText").text("Not running");
 				$("#topboxPhpBadge").addClass("hidden");
@@ -167,14 +95,10 @@ $(window).load(function () {
 				$("#topboxPhpBtn").addClass("btn-success");
 				$("#topboxPhpBtn").html('<i class="fa fa-play"></i> Start');
 				$("#topboxPhp").removeClass("bg-green");
-				$("#topboxPhp").addClass("bg-red");
-				if (php_status == true)
-				{
-					php_status = false;
-				}						
+				$("#topboxPhp").addClass("bg-red");						
 			}		
 			
-			if (result.mysql == true)
+			if (process_status['mysql_status'] == true)
 			{
 				//$("#topboxMySQLText").text("Running");
 				$("#topboxMySQLBadge").removeClass("hidden");
@@ -182,11 +106,7 @@ $(window).load(function () {
 				$("#topboxMySQLBtn").addClass("btn-danger");
 				$("#topboxMySQLBtn").html('<i class="fa fa-stop"></i> Stop');
 				$("#topboxMySQL").removeClass("bg-red");
-				$("#topboxMySQL").addClass("bg-green");
-				if (mysql_status == false)
-				{
-					mysql_status = true;
-				}					
+				$("#topboxMySQL").addClass("bg-green");				
 			} else {
 				//$("#topboxMySQLText").text("Not running");
 				$("#topboxMySQLBadge").addClass("hidden");
@@ -194,18 +114,10 @@ $(window).load(function () {
 				$("#topboxMySQLBtn").addClass("btn-success");
 				$("#topboxMySQLBtn").html('<i class="fa fa-play"></i> Start');
 				$("#topboxMySQL").removeClass("bg-green");
-				$("#topboxMySQL").addClass("bg-red");
-				if (mysql_version == "0.0.0.0")
-				{
-					getMySQLVersion();
-				}
-				if (mysql_status == true)
-				{
-					mysql_status = false;
-				}					
+				$("#topboxMySQL").addClass("bg-red");				
 			}		
 
-			if (result.authserver == true)
+			if (process_status['authserver_status'] == true)
 			{
 				//$("#topboxAuthServerText").text("Running");
 				$("#topboxAuthServerBadge").removeClass("hidden");
@@ -213,13 +125,7 @@ $(window).load(function () {
 				$("#topboxAuthServerBtn").addClass("btn-danger");
 				$("#topboxAuthServerBtn").html('<i class="fa fa-stop"></i> Stop');
 				$("#topboxAuthServer").removeClass("bg-red");
-				$("#topboxAuthServer").addClass("bg-green");
-				if (authserver_status == false)
-				{
-					authserver_status = true;
-					tailAuthserver();
-					$("#authserverCmdLineInner").text("");
-				}					
+				$("#topboxAuthServer").addClass("bg-green");			
 			} else {
 				//$("#topboxAuthServerText").text("Not running");
 				$("#topboxAuthServerBadge").addClass("hidden");
@@ -227,16 +133,10 @@ $(window).load(function () {
 				$("#topboxAuthServerBtn").addClass("btn-success");
 				$("#topboxAuthServerBtn").html('<i class="fa fa-play"></i> Start');
 				$("#topboxAuthServer").removeClass("bg-green");
-				$("#topboxAuthServer").addClass("bg-red");
-				if (authserver_status == true)
-				{
-					authserver_status = false;
-					authserverTail.unwatch();
-					$("#authserverCmdLineInner").append("Authserver closed" + "<br>");
-				}						
+				$("#topboxAuthServer").addClass("bg-red");				
 			}	
 			
-			if (result.worldserver == true)
+			if (process_status['worldserver_status'] == true)
 			{
 				//$("#topboxWorldServerText").text("Running");
 				$("#topboxWorldServerBadge").removeClass("hidden");
@@ -244,13 +144,7 @@ $(window).load(function () {
 				$("#topboxWorldServerBtn").addClass("btn-danger");
 				$("#topboxWorldServerBtn").html('<i class="fa fa-stop"></i> Stop');
 				$("#topboxWorldServer").removeClass("bg-red");
-				$("#topboxWorldServer").addClass("bg-green");
-				if (worldserver_status == false)
-				{
-					worldserver_status = true;
-					tailWorldserver();
-					$("#worldserverCmdLineInner").text("");
-				}					
+				$("#topboxWorldServer").addClass("bg-green");				
 			} else {
 				//$("#topboxWorldServerText").text("Not running");
 				$("#topboxWorldServerBadge").addClass("hidden");
@@ -258,257 +152,166 @@ $(window).load(function () {
 				$("#topboxWorldServerBtn").addClass("btn-success");
 				$("#topboxWorldServerBtn").html('<i class="fa fa-play"></i> Start');
 				$("#topboxWorldServer").removeClass("bg-green");
-				$("#topboxWorldServer").addClass("bg-red");
-				if (worldserver_status == true)
-				{
-					worldserver_status = false;
-					worldserverTail.unwatch();
-					$("#worldserverCmdLineInner").append("Worldserver closed" + "<br>");
-				}						
-			}	
-		
-		})
-	}, 1000);
-});
+				$("#topboxWorldServer").addClass("bg-red");					
+			}				
+		}
+	});
+}
+
 /* --------------------------------------------------------------------------------------------------------	*/
 /* Get Server Version																						*/
 /* --------------------------------------------------------------------------------------------------------	*/
 var mysql_version = "0.0.0.0";
 var webserver_version = "0.0.0.0";
 var php_version = "0.0.0.0";
+var worldserver_version = "0.0.0.0";
+var authserver_version = "0.0.0.0";
 
-function getPhpVersion() {
-	cmd = spawn("bin\\php\\php.exe", ["-v"]);
-	cmd.stdout.on('data', function(data) {
-		process.stdout.write(data);
-		//console.log(data.toString());
-		var stringArray = data.toString().split(" ");
-		php_version =  stringArray[1].toString();
-	});
-	cmd.stderr.on('data', function(data) {
-		process.stderr.write(data);	
-		//console.log(data.toString());
-	});		
-	cmd.on('exit', function(code) {
-		$("#topboxPhpVersion").html(" (Version: " + php_version + ")");
+function checkServerVersion() {
+	$.ajax({
+		url : getBackEndPath + '/checkServerVersion',
+		type : 'get',
+		dataType : 'json',
+		success : function(data) {
+			mysql_version = data.mariadb;
+			webserver_version = data.nginx;
+			php_version = data.php;
+			worldserver_version = data.worldserver;
+			authserver_version = data.authserver;
+			$("#topboxPhpVersion").html(" (Version: " + php_version + ")");
+			$("#topboxMySQLVersion").html(" (Version: " + mysql_version + ")");
+			//$("#topboxWorldserverVersion").html(" (Version: " + worldserver_version + ")");
+			//$("#topboxAuthserverVersion").html(" (Version: " + authserver_version + ")");
+			
+			$("#topboxWebserverVersion").html(" (Version: " + webserver_version + ")");
+		}
 	});
 }
 
-function getMySQLVersion() {
-	cmd = spawn("bin\\mariadb\\bin\\mysql.exe", ["-V"]);
-	cmd.stdout.on('data', function(data) {
-		process.stdout.write(data);
-		//console.log(data);
-		var stringArray = data.toString().split(" ");
-		stringArray.forEach(function(entry) {
-			if (entry.match("-MariaDB,$")) {
-			   mysql_version = entry.replace("-MariaDB,", "")
-			   
-			}		
-		});
-	});
-	cmd.stderr.on('data', function(data) {
-		process.stderr.write(data);	
-		//console.log(data.toString());
-	});		
-	cmd.on('exit', function(code) {
-		$("#topboxMySQLVersion").html(" (Version: " + mysql_version + ")");
-	});
-}
-
-function getNginxVersion() {
-	cmd = spawn("bin\\nginx\\nginx.exe", ["-v"]);
-	cmd.stdout.on('data', function(data) {
-		process.stdout.write(data);
-		//console.log(data.toString());
-	});
-	cmd.stderr.on('data', function(data) {
-		process.stderr.write(data);
-		//console.log(data.toString());
-		var stringArray = data.toString().split(" ");
-		stringArray.forEach(function(entry) {
-			if (entry.match("^nginx/")) {
-			   webserver_version = entry.replace("nginx/", "")
-			   
-			}		
-		});
+//Post json data
+function postJsonData(jsonData)
+{
+	$.ajax({
+	  type: "POST",
+		beforeSend: function (request)
+		{
+			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
+			//request.setRequestHeader("X-XSRFToken", getCookie("_xsrf"));
+		},			  
+	  url: getBackEndPath + '/edgeOpenFile',
+	  cache: false,
+	  data:JSON.stringify(jsonData),
 	});	
-	cmd.on('exit', function(code) {
-		$("#topboxWebserverVersion").html(" (Version: " + webserver_version + ")");
-	});
 }
 	
-	
-
-	
-/* --------------------------------------------------------------------------------------------------------	*/
-/* Start Server																								*/
-/* --------------------------------------------------------------------------------------------------------	*/
-
-var edgeRunProcess = edge.func(function () {
-	/*
-	async (dynamic input) => 
-	{
-		using System.Diagnostics;
-		
-		Process cmd = new Process();
-		cmd.StartInfo.FileName = (string)input.exeFile;
-		cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-		if ((string)input.exeWorkingDir != "") 
-		{
-			cmd.StartInfo.WorkingDirectory = (string)input.exeWorkingDir;
-		}
-		if ((string)input.exeFileParameter != "") 
-		{
-			cmd.StartInfo.Arguments = (string)input.exeFileParameter;
-		}		
-		cmd.Start();		
-
-		return (string)input.exeFile + " executed"; 
-	}
-	*/
-});
-
-var edgeOpenFile = edge.func(function () {
-	/*
-	async (dynamic input) => 
-	{
-		using System.Diagnostics;
-		
-		Process cmd = new Process();
-		cmd.StartInfo.FileName = (string)input.exeFile;
-		if ((string)input.exeWorkingDir != "") 
-		{
-			cmd.StartInfo.WorkingDirectory = (string)input.exeWorkingDir;
-		}
-		if ((string)input.exeFileParameter != "") 
-		{
-			cmd.StartInfo.Arguments = (string)input.exeFileParameter;
-		}		
-		cmd.Start();		
-
-		return (string)input.exeFile + " executed"; 
-	}
-	*/
-});
-
-var edgeRunProcessWindow = edge.func(function () {
-	/*
-	async (dynamic input) => 
-	{
-		using System.Diagnostics;
-		ProcessStartInfo processInfo = new ProcessStartInfo("cmd.exe");
-		if ((string)input.exeWorkingDir != "") 
-		{		
-			processInfo.WorkingDirectory = (string)input.exeWorkingDir;
-		}
-		processInfo.Arguments = "/K " + (string)input.exeFile + " " + (string)input.exeFileParameter;
-		Process.Start(processInfo);		
-		return (string)input.exeFile + " " + (string)input.exeFileParameter + " executed"; 
-	}
-	*/
-});
-
-var killProcess = edge.func(function () {/*
-	async (input) => 
-	{
-		using System.Diagnostics;
-		foreach (var process in Process.GetProcessesByName(input.ToString()))
-		{
-			process.Kill();
-		}
-		return "nginx stopped"; 
-	}
-*/});
-
-function startMySQL() {
-	checkProcess(null, function (error, result) {
-		if (error) throw error;
-		if (result.mysql == true)
-		{
-			edgeRunProcess({"exeFile": "bin\\mariadb\\bin\\mysqladmin.exe", "exeFileParameter": "--defaults-file=bin\\mariadb\\my.ini -uroot --password=\"\" -h127.0.0.1 --protocol=tcp shutdown >> C:\\output.txt", "exeWorkingDir": ""}, function (error, result) {
-				if (error) throw error;
-				console.log(result);
-			});
-		} else {
-			edgeRunProcess({"exeFile": "bin\\mariadb\\bin\\mysqld.exe", "exeFileParameter": "", "exeWorkingDir": ""}, function (error, result) {
-				if (error) throw error;
-				console.log(result);
-			});
-		}
-	})
-};		
-
-function startWebserver() {
-	checkProcess(null, function (error, result) {
-		if (error) throw error;
-		if (result.nginx == true)
-		{
-			edgeRunProcess({"exeFile": "bin\\nginx\\nginx.exe", "exeFileParameter": "-c bin/nginx/conf/nginx.conf -s stop", "exeWorkingDir": ""}, function (error, result) {
-				if (error) throw error;
-				console.log(result);
-			});					
-		} else {
-			edgeRunProcess({"exeFile": "bin\\nginx\\nginx.exe", "exeFileParameter": "-c bin/nginx/conf/nginx.conf", "exeWorkingDir": ""}, function (error, result) {
-				if (error) throw error;
-				console.log(result);
-			});			
-		}
-	})
-};			
-
-function startPhp() {
-	checkProcess(null, function (error, result) {
-		if (error) throw error;
-		if (result.php == true)
-		{
-			killProcess("php-cgi");
-		} else {
-			edgeRunProcess({"exeFile": "bin\\php\\php-cgi.exe", "exeFileParameter": "-b localhost:9100", "exeWorkingDir": ""}, function (error, result) {
-				if (error) throw error;
-				console.log(result);
-			});			
-		}
-	})
-};
-
 function startAuthserver() {
-	checkProcess(null, function (error, result) {
-		if (error) throw error;
-		if (result.authserver == true)
+		if (process_status['authserver_status'] == true)
 		{
-			killProcess("authserver");
+			postJsonData({ command: 'kill', data:'authserver'});		
 		} else {
-			edgeRunProcess({"exeFile": "authserver.exe", "exeFileParameter": "-c authserver.conf", "exeWorkingDir": "bin\\trinitycore"}, function (error, result) {
-				if (error) throw error;
-				console.log(result);
-			});			
+			postJsonData({ command: 'start', data:'authserver.exe', parameter:'-c authserver.conf', path:'bin\\trinitycore\\', showcmd: false});		
 		}
-	})
 };
 
 function startWorldserver() {
-	checkProcess(null, function (error, result) {
-		if (error) throw error;
-		if (result.worldserver == true)
+		if (process_status['worldserver_status'] == true)
 		{
-			killProcess("worldserver");
+			postJsonData({ command: 'kill', data:'worldserver'});		
 		} else {
-			edgeRunProcess({"exeFile": "worldserver.exe", "exeFileParameter": "-c worldserver.conf", "exeWorkingDir": "bin\\trinitycore"}, function (error, result) {
-				if (error) throw error;
-				console.log(result);
-			});			
+			postJsonData({ command: 'start', data:'worldserver.exe', parameter:'-c worldserver.conf', path:'bin\\trinitycore\\', showcmd: false});		
 		}
-	})
+};
+
+function startMySQL() {
+		if (process_status['mysql_status'] == true)
+		{
+			postJsonData({ command: 'start', data:'bin\\mariadb\\bin\\mysqladmin.exe', parameter:'--defaults-file=bin\\mariadb\\my.ini -uroot --password=\"\" -h127.0.0.1 --protocol=tcp shutdown >> C:\\output.txt', path:'', showcmd: false});		
+		} else {
+			postJsonData({ command: 'start', data:'bin\\mariadb\\bin\\mysqld.exe', parameter:'', path:'', showcmd: false});		
+		}
+};
+
+function startWebserver() {
+		if (process_status['nginx_status'] == true)
+		{
+			postJsonData({ command: 'start', data:'bin\\nginx\\nginx.exe', parameter:'-c bin/nginx/conf/nginx.conf -s stop', path:'', showcmd: false});		
+		} else {
+			postJsonData({ command: 'start', data:'bin\\nginx\\nginx.exe', parameter:'-c bin/nginx/conf/nginx.conf', path:'', showcmd: false});		
+		}
+};
+
+function startPhp() {
+		if (process_status['php_status'] == true)
+		{
+			postJsonData({ command: 'kill', data:'php-cgi'});		
+		} else {
+			postJsonData({ command: 'start', data:'bin\\php\\php-cgi.exe', parameter:'-b localhost:9100', path:'', showcmd: false});		
+		}
 };
 
 
-function openTextFile(file) {
-	checkProcess(null, function (error, result) {
-		if (error) throw error;
-		edgeOpenFile({"exeFile": file, "exeFileParameter": "", "exeWorkingDir": ""}, function (error, result) {
-			if (error) throw error;
-			console.log(result);
-		});			
-	})
-};
+var jsArray = {};
+
+
+/*
+ * LOAD SCRIPTS
+ * Usage:
+ * Define function = myPrettyCode ()...
+ * loadScript("js/my_lovely_script.js", myPrettyCode);
+ */
+	function loadScript(scriptName, callback) {
+	
+		if (!jsArray[scriptName]) {
+			jsArray[scriptName] = true;
+	
+			// adding the script tag to the head as suggested before
+			var body = document.getElementsByTagName('body')[0],
+				script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = scriptName;
+	
+			// then bind the event to the callback function
+			// there are several events for cross browser compatibility
+			script.onload = callback;
+	
+			// fire the loading
+			body.appendChild(script);
+			
+			// clear DOM reference
+			//body = null;
+			//script = null;
+	
+		} else if (callback) {
+			// changed else to else if(callback)
+			console.log("JS file already added!");
+			//execute function
+			callback();
+		}
+	
+	}
+/* ~ END: LOAD SCRIPTS */
+/*************************************************************************************************
+	Load Interval Javascripts (e.g. checkRunningApps  etc)
+*************************************************************************************************/
+var jsInterval = {};
+
+function runJsInterval(script, str, delay){
+	if (!jsInterval[str]) {
+		//console.log("Not in array");
+		jsInterval[str] = setInterval(function(){script()},delay);
+	}
+}
+
+function clearJsInterval(){
+    for (var key in jsInterval) {
+        clearInterval(jsInterval[key]);
+		jsInterval[key] = null;
+		delete jsInterval[key];		
+    }
+}
+/*************************************************************************************************
+	Setup Page -> Should be called on each site
+*************************************************************************************************/
+function setupPage() {
+	clearJsInterval();
+}

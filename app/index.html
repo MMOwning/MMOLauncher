@@ -35,60 +35,22 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
     <!-- Animte CSS -->
-    <link href="plugins/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="plugins/animate.css" >
+	<!-- MMOwning CSS -->
+	<link rel="stylesheet" href="plugins/mmowning.css" >
 
-	<link href="plugins/mmowning.css" rel="stylesheet">
 </head>
 
 <!-- ControllerAs syntax -->
-<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
-<body ng-controller="MainCtrl as main" class="hold-transition skin-blue sidebar-mini">
-
-
-
-
-
-
+<!-- Main controller with serveral data used in theme on different view -->
+<body ng-controller="MainCtrl as main" class="hold-transition skin-green sidebar-mini fixed">
 
 
 <!-- Main view  -->
 <div ui-view></div>
 
 
-
-
-
-
-
-
-
-
-<!-- jQuery 2.1.4 -->
-<script>
-window.$ = window.jQuery = require('jquery');
-require('bootstrap');
-</script>
-<!-- jQuery UI 1.11.4 -->
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
-
-
-<!-- jQuery and Bootstrap -->
-<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<script src="plugins/jQueryUI/jquery-ui.min.js"></script>
-<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
-
-
-<!-- MMOwning -->
-<script src="plugins/mmowning.js"></script>	
-	
-	
-	  
-
-
+<!-- Modal Window  -->
 <div id="main_confirmation" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -106,6 +68,81 @@ require('bootstrap');
     </div>
 </div>
 
+<!-- jQuery 2.1.4 -->
+<script>
+//window.$ = window.jQuery = require('jquery');
+//window.$ = window.jQuery = require('./plugins/jQuery/jQuery-2.1.4.min.js');
+//mCustomScrollbar = require('./plugins/jquery.mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js');
+//require('bootstrap');
+/*
+var remote = require('remote');     
+
+
+
+
+var WebSocket = require('ws');
+
+var reconnectInterval = 3000;
+
+var connect = function(){
+	console.log('test');
+    ws = new WebSocket('ws://127.0.0.1:1415/ws');
+    ws.on('open', function() {
+        console.log('socket open');
+		//ws.send(Date.now().toString(), {mask: true});
+		
+
+    });
+    ws.on('error', function() {
+        console.log('socket error');
+		setTimeout(connect, reconnectInterval);
+    });
+    ws.on('close', function() {
+        console.log('socket close');
+        setTimeout(connect, reconnectInterval);
+    });
+	
+	ws.on('message', function message(data, flags) {
+	  console.log(data);
+	  if (data.id ="1")
+	  {
+		  //remote.getCurrentWindow().minimize();
+		  //webContents.executeJavaScript(remote.getCurrentWindow().minimize());
+		  //webContents.executeJavaScript(mainWindow.minimize());
+		  //webContents.minimize();
+		  
+		  //Working
+		  //https://github.com/atom/electron/blob/master/docs/api/browser-window.md
+		  mainWindow.show();
+		  mainWindow.focus();
+		  //mainWindow.close();
+		  //webContents.toggleDevTools();
+	  }
+	  console.log('Roundtrip time: ' + (Date.now() - parseInt(data)) + 'ms', flags);
+
+	});
+	
+};
+
+connect();
+
+
+*/
+</script>
+
+<!-- jQuery and Bootstrap -->
+<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script src="plugins/jQueryUI/jquery-ui.min.js"></script>
+<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="plugins/mmowning.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+
+//Define backend Path -> Needed for all other scripts - Must load before angular and mowning.js
+var getBackEndPath = "http://127.0.0.1:8888";  
+</script>
+
 <!-- Peace JS
 <script src="plugins/PACE/pace.min.js"></script> -->
 
@@ -113,26 +150,13 @@ require('bootstrap');
 <script src="plugins/angular/angular.min.js"></script>
 <script src="plugins/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="plugins/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-
-<!-- Angular Dependiences -->
-<!--                      -->
-<!--                      -->
-<!--                      -->
-
-<!-- endbuild -->
-
-<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="plugins/oclazyload/dist/ocLazyLoad.min.js"></script>
 
 <!-- Anglar App Script -->
 <script src="plugins/app.js"></script>
 <script src="plugins/config.js"></script>
 <script src="plugins/directives.js"></script>
 <script src="plugins/controllers.js"></script>
-<!-- endbuild -->
-
-
-
-
 
 <!-- qTip -->
 <script src="plugins/jquery.qtip/jquery.qtip.min.js"></script>

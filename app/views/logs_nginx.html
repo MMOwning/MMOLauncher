@@ -1,0 +1,193 @@
+<!-- DATA TABLES -->
+<link href="plugins/datatables/css/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+<div class="row">	  
+	<div class="col-md-12">
+		<!-- Default box -->
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title"><span class="icon"><i class="fa fa-bug"></i></span>&nbsp;Webserver Access Log</h3>
+
+				<div class="box-tools pull-right">
+					<a title="Icon Title" class="btn" href="#"><i class="fa fa-list"></i> 
+					<span class="text">Show Entries: 
+							<select size="1" id="select_length">
+								<option value="10" selected="selected">10</option>
+								<option value="25">25</option>
+								<option value="50">50</option>
+								<option value="100">100</option>
+							</select>
+					</span></a>
+
+					<a title="Icon Title" class="btn" href="#"><i class="fa fa-wrench"></i> 
+					<span class="text">Response: 
+							<select style="width: 200px" id="log_level" name="log_level">
+								<option value="0" selected="selected">All</option>
+								<option value="100">1xx - Informational</option>
+								<option value="200">2xx - Success</option>
+								<option value="300">3xx - Redirection</option>
+								<option value="400">4xx - Client Error</option>
+								<option value="500">5xx - Server Error</option>
+							</select>
+					</span></a>
+					
+					<a title="Icon Title" class="btn" href="#"><i class="fa fa-refresh"></i> 
+					<span class="text">Max Results: 
+							<select style="width: 100px" id="max_results" name="max_results">
+								<option value="50" selected="selected">50</option>
+								<option value="250">250</option>
+								<option value="500">500</option>
+								<option value="750">750</option>
+								<option value="1000">1000</option>
+								<option value="1250">1250</option>
+								<option value="1500">1500</option>
+								<option value="1750">1750</option>
+								<option value="2000">2000</option>
+								<option value="2250">2250</option>
+								<option value="2500">2500</option>	
+								<option value="5000">5000</option>
+								<option value="NOLIMIT">No limit</option>	
+							</select>									
+					</span></a>					
+				</div>
+			</div>
+			<div class="box-body table-round">
+				<table class="table table-bordered table-striped data-table display" id="example1">
+					<thead class="table-round-head">
+						<tr>
+							<th>IP</th>
+							<th>Time</th>
+							<th>Request</th>
+							<th>Response</th>			
+							<th>Bytes Sent</th>
+							<th>Referer</th>
+							<th>Browser</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>  
+			</div><!-- /.box-body -->
+		</div><!-- /.box -->
+	</div><!-- /.col -->
+</div>
+
+
+
+<script>
+//setupPage();
+
+var pagefunction = function() {
+
+	$(document).ready(function() {
+		/* Advanced Search options */
+		$('#adv_search_options').click(function() {
+		  $('#adv_search').toggle('slow', function() {
+			//alert('Animation complete.');
+		  });
+		});
+
+		$('#log_level').change(function() {
+			oTable.api().ajax.url(getBackEndPath + "/getWebserverAccessLog/" + $("#max_results").val() + "/" + $("#log_level").val());
+			oTable.api().ajax.reload(null, false);
+		}); 
+		  
+		$('#max_results').change(function() {
+			oTable.api().ajax.url(getBackEndPath + "/getWebserverAccessLog/" + $("#max_results").val() + "/" + $("#log_level").val());
+			oTable.api().ajax.reload(null, false);
+		}); 
+		  
+		/* Get Search result with AJAX */
+		$('#reload').click(function() {
+			oTable.api().ajax.url(getBackEndPath + "/getWebserverAccessLog/" + $("#max_results").val() + "/" + $("#log_level").val());
+			oTable.api().ajax.reload(null, false);
+			//$("#tabs").tabs( "select", "tabs-1" )
+		});  
+
+		// Reload every 3s
+		function reloadLogFiles() {
+			oTable.api().ajax.reload(null, false);
+		}
+
+		//Add to runJsInterval Array - Will get clear on every route change
+		runJsInterval(reloadLogFiles,"reloadLogFiles",3000);
+
+		var oTable =  $('#example1').dataTable({
+			"fnRowCallback": function( nRow, aData, iDisplayIndex,iDisplayIndexFull) {
+				$(nRow).children().each(function(index, td) {
+					if(index == 3)  {
+						if ($(td).html() === "404") {
+							$(nRow).addClass("redCell"); 
+						} 
+						if ($(td).html() === "WARNING") {
+							$(nRow).addClass("blueCell"); 
+						} 								
+						if ($(td).html() === "INFO") {
+							$(nRow).addClass("greenCell");
+						}          
+						/*if ($(td).html() === "DEBUG") {
+							$(nRow).addClass("yellowCell");
+						} */								
+					}
+				});                       
+				return nRow;
+			  },	
+			"bProcessing": false,
+			"bAutoWidth": false,
+			"bPaginate": true,
+			"bLengthChange": false,
+			"bFilter": false,
+			"bSort": true,
+			"bInfo": true,
+			"oTableTools": {
+				"sRowSelect": "multi"
+			},
+			"ajax": getBackEndPath + "/getWebserverAccessLog/" + $("#max_results").val() + "/" + $("#log_level").val(),
+			"aoColumns": [
+							{ "mDataProp": "ip" , "sWidth": "40px"},
+							{ "mDataProp": "time" , "sWidth": "40px"},
+							{ "mDataProp": "request" , "sWidth": "60px"},				
+							{ "mDataProp": "response" , "sWidth": "20px"},
+							{ "mDataProp": "bytes_sent" , "sWidth": "20px"},
+							{ "mDataProp": "referer" , "sWidth": "20px"},
+							{ "mDataProp": "browser" , "sWidth": "200px"},
+								
+			],
+			"aaSorting": [[0,'desc']],
+		});
+
+		//Custom Select for "Show Entries"
+		$('#select_length').change( function () {
+			redrawWithNewCount(oTable, $( "#select_length option:selected" ).text());
+		});
+
+	});
+	
+}
+
+function redrawWithNewCount(t, row_count) {
+    //Lifted more or less right out of the DataTables source
+    var oSettings = t.fnSettings();
+    oSettings._iDisplayLength = parseInt(row_count, 10);
+    t._fnCalculateEnd( oSettings );
+    /* If we have space to show extra rows (backing up from the end point - then do so */
+    if ( oSettings.fnDisplayEnd() == oSettings.fnRecordsDisplay() )
+    {
+      oSettings._iDisplayStart = oSettings.fnDisplayEnd() - oSettings._iDisplayLength;
+      if ( oSettings._iDisplayStart < 0 )
+      {
+        oSettings._iDisplayStart = 0;
+      }
+    }
+    if ( oSettings._iDisplayLength == -1 )
+    {
+      oSettings._iDisplayStart = 0;
+    }
+    t.fnDraw( oSettings );
+    return t;
+}
+
+loadScript("plugins/datatables/jquery.dataTables.js", function(){
+	loadScript("plugins/datatables/dataTables.bootstrap.min.js", pagefunction);
+});
+</script>

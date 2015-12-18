@@ -2,7 +2,7 @@
 <div id="wrapper">
 
 	<!-- Page wrapper -->
-	<header class="main-header"ng-include="'views/common/topnavbar.html'"></header>
+	<header  style="-webkit-app-region: drag" class="main-header"ng-include="'views/common/topnavbar.html'"></header>
 	<!-- Navigation -->
 	<aside class="main-sidebar" ng-include="'views/common/navigation.html'"></aside>
 
@@ -36,10 +36,11 @@
     </div>
     <!-- End page wrapper-->
 
-        <!-- Footer -->
-        <footer class="main-footer" ng-include="'views/common/footer.html'"></footer>
+        <!-- Footer 
+        <footer class="main-footer" ng-include="'views/common/footer.html'"></footer>-->
 
-		<aside class="control-sidebar control-sidebar-dark" ng-include="'views/common/footer.html'"></aside>
+    <!-- Right Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark" ng-include="'views/common/control_sidebar.html'"></aside>
 		<!-- Add the sidebar's background. This div must be placed
 		   immediately after the control sidebar -->
 		<div class="control-sidebar-bg"></div>		

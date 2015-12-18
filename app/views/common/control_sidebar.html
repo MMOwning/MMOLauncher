@@ -8,27 +8,45 @@
     <div class="tab-content">
       <!-- Home tab content -->
       <div class="tab-pane active" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
+        <h3 class="control-sidebar-heading">Log Window</h3>
         <ul class="control-sidebar-menu">
           <li>
             <a href="javascript::;">
-              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+              <i class="menu-icon fa fa-refresh bg-red"></i>
 
               <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                <p>Will be 23 on April 24th</p>
+                <h4 class="control-sidebar-subheading">Max results</h4>
+					<select style="width: 100%" id="max_results" name="max_results">
+						<option value="50" selected="selected">50</option>
+						<option value="250">250</option>
+						<option value="500">500</option>
+						<option value="750">750</option>
+						<option value="1000">1000</option>
+						<option value="1250">1250</option>
+						<option value="1500">1500</option>
+						<option value="1750">1750</option>
+						<option value="2000">2000</option>
+						<option value="2250">2250</option>
+						<option value="2500">2500</option>	
+						<option value="5000">5000</option>
+						<option value="NOLIMIT">No limit</option>	
+					</select>	
               </div>
             </a>
           </li>
           <li>
             <a href="javascript::;">
-              <i class="menu-icon fa fa-user bg-yellow"></i>
+              <i class="menu-icon fa fa-list bg-yellow"></i>
 
               <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                <h4 class="control-sidebar-subheading">Show entries</h4>
 
-                <p>New phone +1(800)555-1234</p>
+					<select size="1" id="select_length" style="width: 100%;">
+						<option value="10" selected="selected">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
               </div>
             </a>
           </li>
