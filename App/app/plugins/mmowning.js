@@ -209,7 +209,7 @@ function startAuthserver() {
 		{
 			postJsonData({ command: 'kill', data:'authserver'});		
 		} else {
-			postJsonData({ command: 'start', data:'authserver.exe', parameter:'-c authserver.conf', path:'bin\\trinitycore\\', showcmd: false});		
+			postJsonData({ command: 'start', data:'authserver.exe', parameter:'-c authserver.conf', path:'Runtime\\trinitycore\\', showcmd: false});		
 		}
 };
 
@@ -218,25 +218,25 @@ function startWorldserver() {
 		{
 			postJsonData({ command: 'kill', data:'worldserver'});		
 		} else {
-			postJsonData({ command: 'start', data:'worldserver.exe', parameter:'-c worldserver.conf', path:'bin\\trinitycore\\', showcmd: false});		
+			postJsonData({ command: 'start', data:'worldserver.exe', parameter:'-c worldserver.conf', path:'Runtime\\trinitycore\\', showcmd: false});		
 		}
 };
 
 function startMySQL() {
 		if (process_status['mysql_status'] == true)
 		{
-			postJsonData({ command: 'start', data:'bin\\mariadb\\bin\\mysqladmin.exe', parameter:'--defaults-file=bin\\mariadb\\my.ini -uroot --password=\"\" -h127.0.0.1 --protocol=tcp shutdown >> C:\\output.txt', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Runtime\\mariadb\\bin\\mysqladmin.exe', parameter:'--defaults-file=Runtime\\mariadb\\my.ini -uroot --password=\"\" -h127.0.0.1 --protocol=tcp shutdown >> C:\\output.txt', path:'', showcmd: false});		
 		} else {
-			postJsonData({ command: 'start', data:'bin\\mariadb\\bin\\mysqld.exe', parameter:'', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Runtime\\mariadb\\bin\\mysqld.exe', parameter:'', path:'', showcmd: false});		
 		}
 };
 
 function startWebserver() {
 		if (process_status['nginx_status'] == true)
 		{
-			postJsonData({ command: 'start', data:'bin\\nginx\\nginx.exe', parameter:'-c bin/nginx/conf/nginx.conf -s stop', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Runtime\\nginx\\nginx.exe', parameter:'-c bin/nginx/conf/nginx.conf -s stop', path:'', showcmd: false});		
 		} else {
-			postJsonData({ command: 'start', data:'bin\\nginx\\nginx.exe', parameter:'-c bin/nginx/conf/nginx.conf', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Runtime\\nginx\\nginx.exe', parameter:'-c bin/nginx/conf/nginx.conf', path:'', showcmd: false});		
 		}
 };
 
@@ -245,7 +245,7 @@ function startPhp() {
 		{
 			postJsonData({ command: 'kill', data:'php-cgi'});		
 		} else {
-			postJsonData({ command: 'start', data:'bin\\php\\php-cgi.exe', parameter:'-b localhost:9100', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Runtime\\php\\php-cgi.exe', parameter:'-b localhost:9100', path:'', showcmd: false});		
 		}
 };
 
