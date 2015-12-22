@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 
-namespace MMOLauncher.Web.SignalR
+namespace MMOwningLauncher.Web.SignalR
 {
     public class MyHub : Hub
     {

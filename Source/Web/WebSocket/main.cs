@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace MMOLauncher.Web.WebSocket
+namespace MMOwningLauncher.Web.WebSocket
 {
 
 

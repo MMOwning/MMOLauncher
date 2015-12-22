@@ -10,12 +10,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using MMOLauncher.Classes;
+using MMOwningLauncher.Classes;
 using Nancy;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MMOLauncher.Web.Modules
+namespace MMOwningLauncher.Web.Modules
 {
     public class Config : NancyModule
     {

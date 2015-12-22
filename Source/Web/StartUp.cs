@@ -6,7 +6,7 @@ using Owin;
 //using Owin.WebSocket.Extensions;
 using System.Runtime.ExceptionServices;
 using Microsoft.Owin.Hosting;
-using MMOLauncher.Web.WebSocket;
+using MMOwningLauncher.Web.WebSocket;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Conventions;
@@ -14,7 +14,7 @@ using Nancy.ErrorHandling;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace MMOLauncher.Web
+namespace MMOwningLauncher.Web
 {
 
     class StartUp

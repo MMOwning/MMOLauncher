@@ -13,26 +13,22 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Owin;
 using Microsoft.Owin.Builder;
-using MMOLauncher.Classes;
 using Nancy.Owin;
 using System.Windows.Forms;
-using MMOLauncher.Web;
-using MMOLauncher.Web.WebSocket;
+using MMOwningLauncher.Web;
+using MMOwningLauncher.Web.WebSocket;
+using MMOwningLauncher.Classes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace MMOLauncher
+namespace MMOwningLauncher
 {
-
     class Program
     {
-
         static void Main(string[] args)
         {
-
-
             //Add Globals
             var scriptpath = Directory.GetCurrentDirectory();
 
@@ -82,47 +78,35 @@ namespace MMOLauncher
             }
 
 
+            //Create Folders if not exist
+            if (!Directory.Exists(Globals.DataPath))
+            {
+                Directory.CreateDirectory(Globals.DataPath);
+            }
 
+            if (!Directory.Exists(Globals.BasePath + "\\Bin"))
+            {
+                Directory.CreateDirectory(Globals.BasePath + "\\Bin");
+            }
 
-            //Blocking Console
-            //Console.ReadKey();
+            if (!Directory.Exists(Globals.BasePath + "\\Logs"))
+            {
+                Directory.CreateDirectory(Globals.BasePath + "\\Logs");
+            }
 
-            //Walkthrough01.Main();
-            //return;
+            if (!Directory.Exists(Globals.BasePath + "\\Temp"))
+            {
+                Directory.CreateDirectory(Globals.BasePath + "\\Temp");
+            }
+
+            if (!Directory.Exists(Globals.BasePath + "\\www"))
+            {
+                Directory.CreateDirectory(Globals.BasePath + "\\www");
+            }
 
             var webServer = new Web.StartUp();
             webServer.StartRun();
 
-            //Server.Start(5001);
-
-
-            //var wssv = new WebSocketService(81, false);
-            //wssv.Start();
-
-            /*var wssv = new WebSocketServer(System.Net.IPAddress.Parse("127.0.0.1"), 4649);
-            wssv.WebSocketServices.SessionCount.GetStatusDescription();
-            wssv.AddWebSocketService<Echo>("/Echo");
-            wssv.AddWebSocketService<Chat>("/Chat");
-            wssv.Start();*/
-            /*if (wssv.IsListening)
-            {
-                Console.WriteLine("Listening on port {0}, and providing WebSocket services:", wssv.Port);
-                foreach (var path in wssv.WebSocketServices.Paths)
-                    Console.WriteLine("- {0}", path);
-            }*/
-
-
-            //Application app = new Application();
-            //app.Run(new BrowserMain());
-
-
-
-            /*Application.EnableVisualStyles();
-            var f = new BrowserForm();
-            f.Show();
-            Application.Run(f);
-
-            CfxRuntime.Shutdown();*/
 
             Globals.BinConfig["authserver"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["authserver"]["autostart"] = false;
@@ -130,12 +114,12 @@ namespace MMOLauncher
             Globals.BinConfig["authserver"]["start"]["FileName"] = "authserver.exe";
             Globals.BinConfig["authserver"]["start"]["Arguments"] = "-c authserver.conf";
             Globals.BinConfig["authserver"]["start"]["WorkingDirectory"] = "Bin\\trinitycore\\";
-            Globals.BinConfig["authserver"]["start"]["ShowCmd"] = true;
+            Globals.BinConfig["authserver"]["start"]["ShowCmd"] = false;
             Globals.BinConfig["authserver"]["stop"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["authserver"]["stop"]["FileName"] = "kill";
             Globals.BinConfig["authserver"]["stop"]["Arguments"] = "authserver";
             Globals.BinConfig["authserver"]["stop"]["WorkingDirectory"] = "";
-            Globals.BinConfig["authserver"]["stop"]["ShowCmd"] = true;
+            Globals.BinConfig["authserver"]["stop"]["ShowCmd"] = false;
 
             Globals.BinConfig["worldserver"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["worldserver"]["autostart"] = false;
@@ -143,12 +127,12 @@ namespace MMOLauncher
             Globals.BinConfig["worldserver"]["start"]["FileName"] = "worldserver.exe";
             Globals.BinConfig["worldserver"]["start"]["Arguments"] = "-c worldserver.conf";
             Globals.BinConfig["worldserver"]["start"]["WorkingDirectory"] = "Bin\\trinitycore\\";
-            Globals.BinConfig["worldserver"]["start"]["ShowCmd"] = true;
+            Globals.BinConfig["worldserver"]["start"]["ShowCmd"] = false;
             Globals.BinConfig["worldserver"]["stop"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["worldserver"]["stop"]["FileName"] = "kill";
             Globals.BinConfig["worldserver"]["stop"]["Arguments"] = "worldserver";
             Globals.BinConfig["worldserver"]["stop"]["WorkingDirectory"] = "";
-            Globals.BinConfig["worldserver"]["stop"]["ShowCmd"] = true;
+            Globals.BinConfig["worldserver"]["stop"]["ShowCmd"] = false;
 
             Globals.BinConfig["nginx"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["nginx"]["autostart"] = false;
@@ -156,12 +140,12 @@ namespace MMOLauncher
             Globals.BinConfig["nginx"]["start"]["FileName"] = "Bin\\nginx\\nginx.exe";
             Globals.BinConfig["nginx"]["start"]["Arguments"] = "-c Bin/nginx/conf/nginx.conf";
             Globals.BinConfig["nginx"]["start"]["WorkingDirectory"] = "";
-            Globals.BinConfig["nginx"]["start"]["ShowCmd"] = true;
+            Globals.BinConfig["nginx"]["start"]["ShowCmd"] = false;
             Globals.BinConfig["nginx"]["stop"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["nginx"]["stop"]["FileName"] = "Bin\\nginx\\nginx.exe";
             Globals.BinConfig["nginx"]["stop"]["Arguments"] = "-c Bin/nginx/conf/nginx.conf -s stop";
             Globals.BinConfig["nginx"]["stop"]["WorkingDirectory"] = "";
-            Globals.BinConfig["nginx"]["stop"]["ShowCmd"] = true;
+            Globals.BinConfig["nginx"]["stop"]["ShowCmd"] = false;
 
             Globals.BinConfig["mysql"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["mysql"]["autostart"] = false;
@@ -169,12 +153,12 @@ namespace MMOLauncher
             Globals.BinConfig["mysql"]["start"]["FileName"] = "Bin\\mariadb\\bin\\mysqld.exe";
             Globals.BinConfig["mysql"]["start"]["Arguments"] = "";
             Globals.BinConfig["mysql"]["start"]["WorkingDirectory"] = "";
-            Globals.BinConfig["mysql"]["start"]["ShowCmd"] = true;
+            Globals.BinConfig["mysql"]["start"]["ShowCmd"] = false;
             Globals.BinConfig["mysql"]["stop"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["mysql"]["stop"]["FileName"] = "Bin\\mariadb\\bin\\mysqladmin.exe";
             Globals.BinConfig["mysql"]["stop"]["Arguments"] = "--defaults-file=Bin\\mariadb\\my.ini -uroot --password=\"\" -h127.0.0.1 --protocol=tcp shutdown";
             Globals.BinConfig["mysql"]["stop"]["WorkingDirectory"] = "";
-            Globals.BinConfig["mysql"]["stop"]["ShowCmd"] = true;
+            Globals.BinConfig["mysql"]["stop"]["ShowCmd"] = false;
 
             Globals.BinConfig["php"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["php"]["autostart"] = false;
@@ -182,43 +166,18 @@ namespace MMOLauncher
             Globals.BinConfig["php"]["start"]["FileName"] = "Bin\\php\\php-cgi.exe";
             Globals.BinConfig["php"]["start"]["Arguments"] = "-b localhost:9100";
             Globals.BinConfig["php"]["start"]["WorkingDirectory"] = "";
-            Globals.BinConfig["php"]["start"]["ShowCmd"] = true;
+            Globals.BinConfig["php"]["start"]["ShowCmd"] = false;
             Globals.BinConfig["php"]["stop"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["php"]["stop"]["FileName"] = "kill";
             Globals.BinConfig["php"]["stop"]["Arguments"] = "php-cgi";
             Globals.BinConfig["php"]["stop"]["WorkingDirectory"] = "";
-            Globals.BinConfig["php"]["stop"]["ShowCmd"] = true;
+            Globals.BinConfig["php"]["stop"]["ShowCmd"] = false;
 
-
-            //Create Config File if not exists
-            if (!File.Exists(Globals.DataPath + "\\BinConfig.json"))
-            {
-                string json = JsonConvert.SerializeObject(Globals.BinConfig, Formatting.Indented);
-                File.WriteAllText(Globals.DataPath + "\\BinConfig.json", json);
-            }
-
-            //Read Real Values
-            StreamReader jsonStreamReader = new StreamReader(Globals.DataPath + "\\BinConfig.json");
-            JsonTextReader jsonReader = new JsonTextReader(jsonStreamReader);
-            JsonSerializer jsonSerializer = new JsonSerializer();
-            dynamic binConfigFile = jsonSerializer.Deserialize(jsonReader);
-            jsonStreamReader.Close();
-
-            //Merge Globals.BinConfig and binConfigFile
-            JObject combinedDictJson = Helpers.CombineJson(Globals.BinConfig, binConfigFile);
-            //Switch combinedDictJson to Expando Object -> Needed to write back settings to Globals.MainSettings
-            dynamic combinedDict = new Dictionary<string, dynamic>(Helpers.JObjectToExpandoObject(combinedDictJson));
-            Globals.BinConfig = combinedDict;
-
-            //Save config file
-            string jsonToFile = JsonConvert.SerializeObject(Globals.BinConfig, Formatting.Indented);
-            System.IO.File.WriteAllText(Globals.DataPath + "\\BinConfig.json", jsonToFile);
+            Helpers.MergeCsDictionaryAndSave(Globals.BinConfig, Globals.DataPath + "\\BinConfig.json");
 
             Application.Run(new Form_TrayMenu());
 
         }
-
-
     }
 
 

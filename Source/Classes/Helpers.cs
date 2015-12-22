@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace MMOLauncher.Classes
+namespace MMOwningLauncher.Classes
 {
     class Helpers
     {
@@ -116,13 +116,31 @@ namespace MMOLauncher.Classes
             return result;
         }
 
-        public static void MergeIntoMainSettingsAndSave(object objectToMerge, string savePath)
+        public static void MergeCsDictionaryAndSave(object csDictionary, string filePath)
         {
-            JObject combinedDictJson = CombineJson(Globals.MainSettings, objectToMerge);
-            dynamic combinedDict = new Dictionary<string, dynamic>(JObjectToExpandoObject(combinedDictJson));
-            Globals.MainSettings = combinedDict;
-            string jsonToFile = JsonConvert.SerializeObject(Globals.MainSettings, Formatting.Indented);
-            System.IO.File.WriteAllText(savePath, jsonToFile);
+            //Create Config File if not exists
+            if (!File.Exists(filePath))
+            {
+                string json = JsonConvert.SerializeObject(csDictionary, Formatting.Indented);
+                File.WriteAllText(filePath, json);
+            }
+
+            //Read Real Values
+            StreamReader jsonStreamReader = new StreamReader(filePath);
+            JsonTextReader jsonReader = new JsonTextReader(jsonStreamReader);
+            JsonSerializer jsonSerializer = new JsonSerializer();
+            dynamic binConfigFile = jsonSerializer.Deserialize(jsonReader);
+            jsonStreamReader.Close();
+
+            //Merge csDictionary and filePath
+            JObject combinedDictJson = Helpers.CombineJson(csDictionary, binConfigFile);
+            //Switch combinedDictJson to Expando Object -> Needed to write back settings to csDictionary
+            dynamic combinedDict = new Dictionary<string, dynamic>(Helpers.JObjectToExpandoObject(combinedDictJson));
+            csDictionary = combinedDict;
+
+            //Save config file
+            string jsonToFile = JsonConvert.SerializeObject(csDictionary, Formatting.Indented);
+            System.IO.File.WriteAllText(filePath, jsonToFile);
         }
 
         /// <summary>

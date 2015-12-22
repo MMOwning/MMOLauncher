@@ -1,4 +1,4 @@
-﻿namespace MMOLauncher
+﻿namespace MMOwningLauncher
 {
     partial class Form_TrayMenu
     {

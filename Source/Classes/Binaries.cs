@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace MMOLauncher.Classes
+namespace MMOwningLauncher.Classes
 {
     class Binaries
     {

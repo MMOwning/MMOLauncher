@@ -11,15 +11,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
-using MMOLauncher.Classes;
-using MMOLauncher.Properties;
-using MMOLauncher.Web.WebSocket;
+using MMOwningLauncher.Properties;
+using MMOwningLauncher.Web.WebSocket;
+using MMOwningLauncher.Classes;
 using Newtonsoft.Json;
 using Nowin;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace MMOLauncher
+namespace MMOwningLauncher
 {
     public partial class Form_TrayMenu : Form
     {

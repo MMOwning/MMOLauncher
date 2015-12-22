@@ -111,10 +111,10 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() { 
  //mainWindow = new BrowserWindow({width: 1500, height: 800, frame: false}); 
- mainWindow = new BrowserWindow({width: 1500, height: 800, nodeIntegration: true, frame: true}); 
+ mainWindow = new BrowserWindow({width: 1500, height: 800, nodeIntegration: true, frame: false}); 
  mainWindow.loadUrl('file://' + __dirname + '/index.html'); 
  webContents = mainWindow.webContents;
- mainWindow.toggleDevTools();
+ //mainWindow.toggleDevTools();
  mainWindow.on('closed', function() {
  mainWindow = null;
  }); 

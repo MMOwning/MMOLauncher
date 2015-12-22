@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MMOLauncher.Classes
+namespace MMOwningLauncher.Classes
 {
     public class GetProcessesToolhelp32
     {

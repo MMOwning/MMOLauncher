@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MMOLauncher.Classes
+namespace MMOwningLauncher.Classes
 {
     class IsUserAdministrator
     {
