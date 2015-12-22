@@ -154,6 +154,46 @@ namespace MMOLauncher.Web.Modules
             };
 
 
+            Post["/postBinCommand"] = _ =>
+            {
+                var bodyAsString = "";
+                using (var rdr = new StreamReader(this.Request.Body))
+                {
+                    bodyAsString = rdr.ReadToEnd();
+                }
+
+                var results = JsonConvert.DeserializeObject<dynamic>(bodyAsString);
+                string command = null;
+                string data = null;
+
+                if (results.Property("command") != null) command = results.command;
+                if (results.Property("data") != null) data = results.data;
+
+
+                if (command == "toggle")
+                {
+                    if (Globals.RunningProcesses[data])
+                    {
+                        command = "stop";
+                    }
+                    else
+                    {
+                        command = "start";
+                    }
+
+                    if (Globals.BinConfig[data][command]["FileName"] == "kill")
+                    {
+                        Binaries.RunProgram("kill", "", Globals.BinConfig[data][command]["Arguments"], "", false);
+                    }
+                    else
+                    {
+                        Binaries.RunProgram(command, Globals.BinConfig[data][command]["FileName"], Globals.BinConfig[data][command]["Arguments"], Globals.BinConfig[data][command]["WorkingDirectory"], Globals.BinConfig[data][command]["ShowCmd"]);
+                    }
+                }
+                return command + " for " + data + " executed";
+            };
+
+
             Post["/edgeOpenFile"] = _ =>
             {
 

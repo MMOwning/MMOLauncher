@@ -69,7 +69,7 @@ namespace MMOLauncher
 
             var nginxMenu = new ToolStripMenuItem("nginx");
             contextMenuStrip1.Items.Add(nginxMenu);
-            if (Globals.RunningProcesses["nginx_status"])
+            if (Globals.RunningProcesses["nginx"])
             {
                 nginxMenu.Image = Resources.ok;
                 nginxMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "nginx", "stop"); });
@@ -83,7 +83,7 @@ namespace MMOLauncher
 
             var phpMenu = new ToolStripMenuItem("php");
             contextMenuStrip1.Items.Add(phpMenu);
-            if (Globals.RunningProcesses["php_status"])
+            if (Globals.RunningProcesses["php"])
             {
                 phpMenu.Image = Resources.ok;
                 phpMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "php", "stop"); });
@@ -98,7 +98,7 @@ namespace MMOLauncher
 
             var mysqlMenu = new ToolStripMenuItem("MySQL");
             contextMenuStrip1.Items.Add(mysqlMenu);
-            if (Globals.RunningProcesses["mysql_status"])
+            if (Globals.RunningProcesses["mysql"])
             {
                 mysqlMenu.Image = Resources.ok;
                 mysqlMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "mysql", "stop"); });
@@ -112,7 +112,7 @@ namespace MMOLauncher
 
             var authserverMenu = new ToolStripMenuItem("Auhserver");
             contextMenuStrip1.Items.Add(authserverMenu);
-            if (Globals.RunningProcesses["authserver_status"])
+            if (Globals.RunningProcesses["authserver"])
             {
                 authserverMenu.Image = Resources.ok;
                 authserverMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "authserver", "stop"); });
@@ -127,7 +127,7 @@ namespace MMOLauncher
 
             var worldserverMenu = new ToolStripMenuItem("Worldserver");
             contextMenuStrip1.Items.Add(worldserverMenu);
-            if (Globals.RunningProcesses["worldserver_status"])
+            if (Globals.RunningProcesses["worldserver"])
             {
                 worldserverMenu.Image = Resources.ok;
                 worldserverMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "worldserver", "stop"); });

@@ -13,7 +13,7 @@
 						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Bin\\trinitycore\\Auth.log'});"><i class="fa fa-file-text-o"></i> Log</a>
 						<div style="display: none;">Open authserver.config</div>						
 					</span>
-					<a id="topboxAuthServerBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startAuthserver()">
+					<a id="topboxAuthServerBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="postBinCommand({ command: 'toggle', data:'authserver'});">
 						<i class="fa fa-play"></i> Start
 					</a>					  
                 </div><!-- /.info-box-content -->
@@ -31,7 +31,7 @@
 						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Bin\\trinitycore\\Server.log'});"><i class="fa fa-file-text-o"></i> Log</a>
 						<div style="display: none;">Open authserver.config</div>						
 					</span>
-					<a id="topboxWorldServerBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startWorldserver()">
+					<a id="topboxWorldServerBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="postBinCommand({ command: 'toggle', data:'worldserver'});">
 						<i class="fa fa-play"></i> Start
 					</a>					  
                 </div><!-- /.info-box-content -->
@@ -49,7 +49,7 @@
 						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Data\\logs\\mariadb_error.log'});"><i class="fa fa-file-text-o"></i> Log</a>
 						<div style="display: none;">Open authserver.config</div>						
 					</span>					
-					<a id="topboxMySQLBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startMySQL()">
+					<a id="topboxMySQLBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="postBinCommand({ command: 'toggle', data:'mysql'});">
 						<i class="fa fa-play"></i> Start
 					</a>					  
                 </div><!-- /.info-box-content -->
@@ -69,7 +69,7 @@
 						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Data\\logs\\error.log'});"><i class="fa fa-bug"></i> Error Log&nbsp;</a>
 						<div style="display: none;">Open authserver.config</div>	
 					</span>					
-					<a id="topboxWebserverBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startWebserver()">
+					<a id="topboxWebserverBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="postBinCommand({ command: 'toggle', data:'nginx'});">
 						<i class="fa fa-play"></i> Start
 					</a>					  
                 </div><!-- /.info-box-content -->
@@ -87,7 +87,7 @@
 						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Data\\logs\\php_error.log'});"><i class="fa fa-bug"></i> Error Log&nbsp;</a>
 						<div style="display: none;">Open authserver.config</div>						
 					</span>					
-					<a id="topboxPhpBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startPhp()">
+					<a id="topboxPhpBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="postBinCommand({ command: 'toggle', data:'php'});">
 						<i class="fa fa-play"></i> Start
 					</a>					  
                 </div><!-- /.info-box-content -->

@@ -43,11 +43,11 @@ function tailAuthserver() {
 //worldserverTail.unwatch();
 	
 var process_status = {};
-process_status['nginx_status'] = false;
-process_status['mysql_status'] = false;
-process_status['php_status'] = false;
-process_status['worldserver_status'] = false;
-process_status['authserver_status'] = false;
+process_status['nginx'] = false;
+process_status['mysql'] = false;
+process_status['php'] = false;
+process_status['worldserver'] = false;
+process_status['authserver'] = false;
 
 function checkRunningApps() {
 	$.ajax({
@@ -60,7 +60,7 @@ function checkRunningApps() {
 			//console.log(process_status);
 			//console.log(data.mysql_status)
 
-			if (process_status['nginx_status'] == true)
+			if (process_status['nginx'] == true)
 			{
 				//$("#topboxWebserverText").text("Running");
 				$("#topboxWebserverBadge").removeClass("hidden");
@@ -79,7 +79,7 @@ function checkRunningApps() {
 				$("#topboxWebserver").addClass("bg-red");			
 			}
 			
-			if (process_status['php_status'] == true)
+			if (process_status['php'] == true)
 			{
 				//$("#topboxPhpText").text("Running");
 				$("#topboxPhpBadge").removeClass("hidden");
@@ -98,7 +98,7 @@ function checkRunningApps() {
 				$("#topboxPhp").addClass("bg-red");						
 			}		
 			
-			if (process_status['mysql_status'] == true)
+			if (process_status['mysql'] == true)
 			{
 				//$("#topboxMySQLText").text("Running");
 				$("#topboxMySQLBadge").removeClass("hidden");
@@ -117,7 +117,7 @@ function checkRunningApps() {
 				$("#topboxMySQL").addClass("bg-red");				
 			}		
 
-			if (process_status['authserver_status'] == true)
+			if (process_status['authserver'] == true)
 			{
 				//$("#topboxAuthServerText").text("Running");
 				$("#topboxAuthServerBadge").removeClass("hidden");
@@ -136,7 +136,7 @@ function checkRunningApps() {
 				$("#topboxAuthServer").addClass("bg-red");				
 			}	
 			
-			if (process_status['worldserver_status'] == true)
+			if (process_status['worldserver'] == true)
 			{
 				//$("#topboxWorldServerText").text("Running");
 				$("#topboxWorldServerBadge").removeClass("hidden");
@@ -203,9 +203,24 @@ function postJsonData(jsonData)
 	  data:JSON.stringify(jsonData),
 	});	
 }
+
+function postBinCommand(jsonData)
+{
+	$.ajax({
+	  type: "POST",
+		beforeSend: function (request)
+		{
+			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');		
+			//request.setRequestHeader("X-XSRFToken", getCookie("_xsrf"));
+		},			  
+	  url: getBackEndPath + '/postBinCommand',
+	  cache: false,
+	  data:JSON.stringify(jsonData),
+	});	
+}
 	
 function startAuthserver() {
-		if (process_status['authserver_status'] == true)
+		if (process_status['authserver'] == true)
 		{
 			postJsonData({ command: 'kill', data:'authserver'});		
 		} else {
@@ -214,7 +229,7 @@ function startAuthserver() {
 };
 
 function startWorldserver() {
-		if (process_status['worldserver_status'] == true)
+		if (process_status['worldserver'] == true)
 		{
 			postJsonData({ command: 'kill', data:'worldserver'});		
 		} else {
@@ -223,7 +238,7 @@ function startWorldserver() {
 };
 
 function startMySQL() {
-		if (process_status['mysql_status'] == true)
+		if (process_status['mysql'] == true)
 		{
 			postJsonData({ command: 'start', data:'Bin\\mariadb\\bin\\mysqladmin.exe', parameter:'--defaults-file=Bin\\mariadb\\my.ini -uroot --password=\"\" -h127.0.0.1 --protocol=tcp shutdown >> C:\\output.txt', path:'', showcmd: true});		
 		} else {
@@ -232,7 +247,7 @@ function startMySQL() {
 };
 
 function startWebserver() {
-		if (process_status['nginx_status'] == true)
+		if (process_status['nginx'] == true)
 		{
 			postJsonData({ command: 'start', data:'Bin\\nginx\\nginx.exe', parameter:'-c Bin/nginx/conf/nginx.conf -s stop', path:'', showcmd: true});		
 		} else {
@@ -241,7 +256,7 @@ function startWebserver() {
 };
 
 function startPhp() {
-		if (process_status['php_status'] == true)
+		if (process_status['php'] == true)
 		{
 			postJsonData({ command: 'kill', data:'php-cgi'});		
 		} else {

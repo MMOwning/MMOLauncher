@@ -73,35 +73,35 @@ namespace MMOLauncher.Classes
 
         public static void CheckRunningProcessTimer(object source, ElapsedEventArgs e)
         {
-            Globals.RunningProcesses["nginx_status"] = false;
-            Globals.RunningProcesses["php_status"] = false;
-            Globals.RunningProcesses["mysql_status"] = false;
-            Globals.RunningProcesses["authserver_status"] = false;
-            Globals.RunningProcesses["worldserver_status"] = false;
+            Globals.RunningProcesses["nginx"] = false;
+            Globals.RunningProcesses["php"] = false;
+            Globals.RunningProcesses["mysql"] = false;
+            Globals.RunningProcesses["authserver"] = false;
+            Globals.RunningProcesses["worldserver"] = false;
 
             var processList = new GetProcessesToolhelp32();
             var processListOut = processList.GetListSimple();
 
             if (processListOut.Contains("nginx.exe"))
             {
-                Globals.RunningProcesses["nginx_status"] = true;
+                Globals.RunningProcesses["nginx"] = true;
             }
             if (processListOut.Contains("php-cgi.exe"))
             {
-                Globals.RunningProcesses["php_status"] = true;
+                Globals.RunningProcesses["php"] = true;
             }
             if (processListOut.Contains("mysqld.exe"))
             {
-                Globals.RunningProcesses["mysql_status"] = true;
+                Globals.RunningProcesses["mysql"] = true;
             }
 
             if (processListOut.Contains("authserver.exe"))
             {
-                Globals.RunningProcesses["authserver_status"] = true;
+                Globals.RunningProcesses["authserver"] = true;
             }
             if (processListOut.Contains("worldserver.exe"))
             {
-                Globals.RunningProcesses["worldserver_status"] = true;
+                Globals.RunningProcesses["worldserver"] = true;
             }
         }
 
