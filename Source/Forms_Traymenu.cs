@@ -53,13 +53,13 @@ namespace MMOLauncher
 
         private void RunBin_Click(object source, EventArgs e, string bin, string command)
         {
-            if (Globals.BinConfig[bin][command]["FileName"] == "kill")
+            if (command == "restart")
             {
-                Binaries.RunProgram("kill", "", Globals.BinConfig[bin][command]["Arguments"], "",false);
+                Binaries.RunProgram(command, bin, "", "", "", false, false);
             }
             else
             {
-                Binaries.RunProgram(command, Globals.BinConfig[bin][command]["FileName"], Globals.BinConfig[bin][command]["Arguments"], Globals.BinConfig[bin][command]["WorkingDirectory"], Globals.BinConfig[bin][command]["ShowCmd"]);
+                Binaries.RunProgram(command, bin, Globals.BinConfig[bin][command]["FileName"], Globals.BinConfig[bin][command]["Arguments"], Globals.BinConfig[bin][command]["WorkingDirectory"], Globals.BinConfig[bin][command]["ShowCmd"], false);
             }
         }
 

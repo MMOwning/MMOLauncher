@@ -10,62 +10,122 @@ namespace MMOLauncher.Classes
 {
     class Binaries
     {
-
-        public static void RunProgram(string command, string FileName, string Arguments, string WorkingDirectory, bool ShowCmd)
+        public static bool RunProgram(string command, string bin, string fileName = "", string arguments = "", string workingDirectory = "", bool showCmd = false, bool waitForExit = false)
         {
+            //Supported commands are start and stop -> Check for others and rewrite
+            if (command == "restart")
+            {
+                if (RunProgram("stop", bin, Globals.BinConfig[bin]["stop"]["FileName"], Globals.BinConfig[bin]["stop"]["Arguments"], Globals.BinConfig[bin]["stop"]["WorkingDirectory"], Globals.BinConfig[bin]["stop"]["ShowCmd"], true))
+                {
+                    RunProgram("start", bin, Globals.BinConfig[bin]["start"]["FileName"], Globals.BinConfig[bin]["start"]["Arguments"], Globals.BinConfig[bin]["start"]["WorkingDirectory"], Globals.BinConfig[bin]["start"]["ShowCmd"], true);
+                }
+            }
+
+            if (command == "kill")
+            {
+                command = "stop";
+            }
+
+            if (command == "toggle")
+            {
+                if (Globals.RunningProcesses[bin])
+                {
+                    command = "stop";
+                }
+                else
+                {
+                    command = "start";
+                }
+            }
+
+            //If RunProgram is started without arguments find parameters
+            if (fileName == "")
+            {
+                fileName = Globals.BinConfig[bin][command]["FileName"];
+            }
+            if (arguments == "")
+            {
+                arguments = Globals.BinConfig[bin][command]["Arguments"];
+            }
+            if (workingDirectory == "")
+            {
+                workingDirectory = Globals.BinConfig[bin][command]["WorkingDirectory"];
+            }
+
             if (command == "openTextFile")
             {
                 Process cmd = new Process();
-                cmd.StartInfo.FileName = Globals.BasePath + "\\" + FileName;
-                if (WorkingDirectory != "") cmd.StartInfo.WorkingDirectory = WorkingDirectory;
-                if (Arguments != "") cmd.StartInfo.Arguments = Arguments;
+                cmd.StartInfo.FileName = Globals.BasePath + "\\" + fileName;
+                if (workingDirectory != "") cmd.StartInfo.WorkingDirectory = workingDirectory;
+                if (arguments != "") cmd.StartInfo.Arguments = arguments;
                 cmd.Start();
             }
+
+
+            if (command == "stop")
+            {
+                if (Globals.BinConfig[bin][command]["FileName"] == "kill")
+                {
+                    command = "kill";
+                }
+            }
+
 
             if (command == "start" || command == "stop")
             {
                 Process cmd = new Process();
-                if (ShowCmd)
+                if (showCmd)
                 {
                     cmd.StartInfo.FileName = "cmd.exe";
-                    if (Arguments != "")
+                    if (arguments != "")
                     {
-                        cmd.StartInfo.Arguments = "/K " + FileName + " " + Arguments;
+                        cmd.StartInfo.Arguments = "/K " + fileName + " " + arguments;
                     }
                     else
                     {
-                        cmd.StartInfo.Arguments = "/K " + FileName;
+                        cmd.StartInfo.Arguments = "/K " + fileName;
                     }
                 }
                 else
                 {
-                    cmd.StartInfo.FileName = FileName;
-                    if (Arguments != "")
+                    cmd.StartInfo.FileName = fileName;
+                    if (arguments != "")
                     {
-                        cmd.StartInfo.Arguments = Arguments;
+                        cmd.StartInfo.Arguments = arguments;
                     }
                 }
-                if (WorkingDirectory != "")
+                if (workingDirectory != "")
                 {
-                    cmd.StartInfo.WorkingDirectory = Globals.BasePath + "\\" + WorkingDirectory;
+                    cmd.StartInfo.WorkingDirectory = Globals.BasePath + "\\" + workingDirectory;
                 }
                 else
                 {
                     cmd.StartInfo.WorkingDirectory = Globals.BasePath;
                 }
-                cmd.Start();
+                if (waitForExit)
+                {
+                    cmd.Start();
+                    cmd.WaitForExit(5000);
+                }
+                else
+                {
+                    cmd.Start();
+                }
+                
             }
 
             if (command == "kill")
             {
-                if (Arguments != "")
+                if (arguments != "")
                 {
-                    foreach (var process in Process.GetProcessesByName(Arguments))
+                    foreach (var process in Process.GetProcessesByName(arguments))
                     {
                         process.Kill();
                     }
                 }
             }
+
+            return true;
 
         }
 

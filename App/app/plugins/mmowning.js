@@ -62,6 +62,8 @@ function checkRunningApps() {
 
 			if (process_status['nginx'] == true)
 			{
+				$("#topboxWebserverBtnStart").addClass("hidden");
+				$("#topboxWebserverBtnReStart").removeClass("hidden");				
 				//$("#topboxWebserverText").text("Running");
 				$("#topboxWebserverBadge").removeClass("hidden");
 				$("#topboxWebserverBtn").removeClass("btn-success");
@@ -70,6 +72,8 @@ function checkRunningApps() {
 				$("#topboxWebserver").removeClass("bg-red");
 				$("#topboxWebserver").addClass("bg-green");
 			} else {
+				$("#topboxWebserverBtnStart").removeClass("hidden");
+				$("#topboxWebserverBtnReStart").addClass("hidden");				
 				//$("#topboxWebserverText").text("Not running");
 				$("#topboxWebserverBadge").addClass("hidden");
 				$("#topboxWebserverBtn").removeClass("btn-danger");
@@ -81,6 +85,8 @@ function checkRunningApps() {
 			
 			if (process_status['php'] == true)
 			{
+				$("#topboxPhpBtnStart").addClass("hidden");
+				$("#topboxPhpBtnReStart").removeClass("hidden");				
 				//$("#topboxPhpText").text("Running");
 				$("#topboxPhpBadge").removeClass("hidden");
 				$("#topboxPhpBtn").removeClass("btn-success");
@@ -89,6 +95,8 @@ function checkRunningApps() {
 				$("#topboxPhp").removeClass("bg-red");
 				$("#topboxPhp").addClass("bg-green");			
 			} else {
+				$("#topboxPhpBtnStart").removeClass("hidden");
+				$("#topboxPhpBtnReStart").addClass("hidden");				
 				//$("#topboxPhpText").text("Not running");
 				$("#topboxPhpBadge").addClass("hidden");
 				$("#topboxPhpBtn").removeClass("btn-danger");
@@ -101,6 +109,8 @@ function checkRunningApps() {
 			if (process_status['mysql'] == true)
 			{
 				//$("#topboxMySQLText").text("Running");
+				$("#topboxMySQLBtnStart").addClass("hidden");
+				$("#topboxMySQLBtnReStart").removeClass("hidden");
 				$("#topboxMySQLBadge").removeClass("hidden");
 				$("#topboxMySQLBtn").removeClass("btn-success");
 				$("#topboxMySQLBtn").addClass("btn-danger");
@@ -108,7 +118,8 @@ function checkRunningApps() {
 				$("#topboxMySQL").removeClass("bg-red");
 				$("#topboxMySQL").addClass("bg-green");				
 			} else {
-				//$("#topboxMySQLText").text("Not running");
+				$("#topboxMySQLBtnStart").removeClass("hidden");
+				$("#topboxMySQLBtnReStart").addClass("hidden");
 				$("#topboxMySQLBadge").addClass("hidden");
 				$("#topboxMySQLBtn").removeClass("btn-danger");
 				$("#topboxMySQLBtn").addClass("btn-success");
@@ -119,6 +130,8 @@ function checkRunningApps() {
 
 			if (process_status['authserver'] == true)
 			{
+				$("#topboxAuthServerBtnStart").addClass("hidden");
+				$("#topboxAuthServerBtnReStart").removeClass("hidden");				
 				//$("#topboxAuthServerText").text("Running");
 				$("#topboxAuthServerBadge").removeClass("hidden");
 				$("#topboxAuthServerBtn").removeClass("btn-success");
@@ -127,6 +140,8 @@ function checkRunningApps() {
 				$("#topboxAuthServer").removeClass("bg-red");
 				$("#topboxAuthServer").addClass("bg-green");			
 			} else {
+				$("#topboxAuthServerBtnStart").removeClass("hidden");
+				$("#topboxAuthServerBtnReStart").addClass("hidden");				
 				//$("#topboxAuthServerText").text("Not running");
 				$("#topboxAuthServerBadge").addClass("hidden");
 				$("#topboxAuthServerBtn").removeClass("btn-danger");
@@ -138,6 +153,8 @@ function checkRunningApps() {
 			
 			if (process_status['worldserver'] == true)
 			{
+				$("#topboxWorldServerBtnStart").addClass("hidden");
+				$("#topboxWorldServerBtnReStart").removeClass("hidden");				
 				//$("#topboxWorldServerText").text("Running");
 				$("#topboxWorldServerBadge").removeClass("hidden");
 				$("#topboxWorldServerBtn").removeClass("btn-success");
@@ -146,6 +163,8 @@ function checkRunningApps() {
 				$("#topboxWorldServer").removeClass("bg-red");
 				$("#topboxWorldServer").addClass("bg-green");				
 			} else {
+				$("#topboxWorldServerBtnStart").removeClass("hidden");
+				$("#topboxWorldServerBtnReStart").addClass("hidden");				
 				//$("#topboxWorldServerText").text("Not running");
 				$("#topboxWorldServerBadge").addClass("hidden");
 				$("#topboxWorldServerBtn").removeClass("btn-danger");
