@@ -7,10 +7,10 @@
   "author": "LORDofDOOM <lordofdoom.de@googlemail.com>",
   "main": "main.js",
   "dependencies": {
-    "always-tail": "^0.2.0",
-    "bootstrap": "^3.3.6",
     "electron-edge": "^4.0.1-pre1",
     "electron-prebuilt": "^0.35.4",
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "require": "^2.4.20",
+    "ws": "^0.8.1"
   }
 }

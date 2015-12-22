@@ -209,7 +209,7 @@ function startAuthserver() {
 		{
 			postJsonData({ command: 'kill', data:'authserver'});		
 		} else {
-			postJsonData({ command: 'start', data:'authserver.exe', parameter:'-c authserver.conf', path:'Runtime\\trinitycore\\', showcmd: false});		
+			postJsonData({ command: 'start', data:'authserver.exe', parameter:'-c authserver.conf', path:'Bin\\trinitycore\\', showcmd: false});		
 		}
 };
 
@@ -218,25 +218,25 @@ function startWorldserver() {
 		{
 			postJsonData({ command: 'kill', data:'worldserver'});		
 		} else {
-			postJsonData({ command: 'start', data:'worldserver.exe', parameter:'-c worldserver.conf', path:'Runtime\\trinitycore\\', showcmd: false});		
+			postJsonData({ command: 'start', data:'worldserver.exe', parameter:'-c worldserver.conf', path:'Bin\\trinitycore\\', showcmd: false});		
 		}
 };
 
 function startMySQL() {
 		if (process_status['mysql_status'] == true)
 		{
-			postJsonData({ command: 'start', data:'Runtime\\mariadb\\bin\\mysqladmin.exe', parameter:'--defaults-file=Runtime\\mariadb\\my.ini -uroot --password=\"\" -h127.0.0.1 --protocol=tcp shutdown >> C:\\output.txt', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Bin\\mariadb\\bin\\mysqladmin.exe', parameter:'--defaults-file=Bin\\mariadb\\my.ini -uroot --password=\"\" -h127.0.0.1 --protocol=tcp shutdown >> C:\\output.txt', path:'', showcmd: true});		
 		} else {
-			postJsonData({ command: 'start', data:'Runtime\\mariadb\\bin\\mysqld.exe', parameter:'', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Bin\\mariadb\\bin\\mysqld.exe', parameter:'', path:'', showcmd: true});		
 		}
 };
 
 function startWebserver() {
 		if (process_status['nginx_status'] == true)
 		{
-			postJsonData({ command: 'start', data:'Runtime\\nginx\\nginx.exe', parameter:'-c bin/nginx/conf/nginx.conf -s stop', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Bin\\nginx\\nginx.exe', parameter:'-c Bin/nginx/conf/nginx.conf -s stop', path:'', showcmd: true});		
 		} else {
-			postJsonData({ command: 'start', data:'Runtime\\nginx\\nginx.exe', parameter:'-c bin/nginx/conf/nginx.conf', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Bin\\nginx\\nginx.exe', parameter:'-c Bin/nginx/conf/nginx.conf' , path:'', showcmd: true});		
 		}
 };
 
@@ -245,7 +245,7 @@ function startPhp() {
 		{
 			postJsonData({ command: 'kill', data:'php-cgi'});		
 		} else {
-			postJsonData({ command: 'start', data:'Runtime\\php\\php-cgi.exe', parameter:'-b localhost:9100', path:'', showcmd: false});		
+			postJsonData({ command: 'start', data:'Bin\\php\\php-cgi.exe', parameter:'-b localhost:9100', path:'', showcmd: false});		
 		}
 };
 
@@ -290,6 +290,75 @@ var jsArray = {};
 	
 	}
 /* ~ END: LOAD SCRIPTS */
+
+
+
+
+/*************************************************************************************************
+	Page Loading (ajax, external)
+*************************************************************************************************/
+function loadExternal(src) {
+	$('#ui-view').html('<iframe id="frame" src="' + src + '" width="100%" frameBorder="0" style="margin: -15px !important;"></iframe>');
+    $('iframe#frame').load(function() {
+		//alert("loaded");	
+		$('#frame').css('height', $(window).height() - 55);
+		/*var head = jQuery("#frame").contents().find("head");
+		var css = '<style type="text/css">' +
+				  '#banner{display:none}; ' +
+				  '</style>';
+		jQuery(head).append(css);			*/
+    });	
+}
+
+function getMenuIcon(key) {
+	return "/cache/icons/" + key + "_16x16.png";
+	alert(key);
+}
+
+function loadURL(url, container) {
+	$.ajax({
+		type : "GET",
+		url : url,
+		dataType : 'html',
+		cache : true,
+		beforeSend : function() {
+			container.html('<br><bt><h1 style="margin-top:10px; display:block; text-align:center"><i class="fa fa-cog fa-spin"></i> Loading...</h1>');
+			if (animateAjaxLoad == true) {
+				if (container[0] == $("#content")[0]) {
+					$("html").animate({
+						scrollTop : 0
+					}, "fast");
+				}
+			}
+		},
+		success : function(data) {
+			if (animateAjaxLoad == true) {
+				container.css({
+					opacity : '0.0'
+				}).html(data).delay(50).animate({
+					opacity : '1.0'
+				}, 300);
+			} else {
+				container.html(data);
+			}
+			// Add Active class after success
+			$("li.active").removeClass("active");
+			var href = $("#menuLinks li a").filter(function() {
+				if ($(this).attr('href') === url) {
+					$(this).parents('li').addClass('active');
+				}
+			});
+
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			container.html('<br><bt><h4 style="margin-top:10px; display:block; text-align:center"><i class="fa fa-warning txt-color-orangeDark"></i> Error 404! Page not found.</h4>');
+		},
+		async : false
+	});
+}
+
+
+
 /*************************************************************************************************
 	Load Interval Javascripts (e.g. checkRunningApps  etc)
 *************************************************************************************************/

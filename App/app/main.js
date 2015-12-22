@@ -32,12 +32,11 @@ ws.on('message', function message(data, flags) {
 
 
 
-
 var reconnectInterval = 3000;
 
 var connect = function(){
 	console.log('test');
-    ws = new WebSocket('ws://127.0.0.1:1415/ws');
+    ws = new WebSocket('ws://127.0.0.1:8889/Electron');
     ws.on('open', function() {
         console.log('socket open');
 		//ws.send(Date.now().toString(), {mask: true});
@@ -53,7 +52,9 @@ var connect = function(){
 	
 	ws.on('message', function message(data, flags) {
 	  console.log(data);
-	  if (data.id ="1")
+	  jsonData = JSON.parse( data );
+	  console.log(jsonData.electron);
+	  /*if (jsonData.electron =="focus")
 	  {
 		  //remote.getCurrentWindow().minimize();
 		  //webContents.executeJavaScript(remote.getCurrentWindow().minimize());
@@ -66,8 +67,28 @@ var connect = function(){
 		  mainWindow.focus();
 		  //mainWindow.close();
 		  //webContents.toggleDevTools();
+	  }*/
+	  
+	  
+	  if (jsonData.api =="BrowserWindow")
+	  {
+		  if (jsonData.command =="close")
+		  {
+			  mainWindow.close();
+		  }	  
+		  
+		  else if (jsonData.command  =="focus")
+		  {
+			  mainWindow.show();
+			  mainWindow.focus();
+		  }	  	  
+		  
+		  else if (jsonData.command  =="loadUrl")
+		  {
+			  mainWindow.loadUrl(jsonData.data); 
+		  }	  		  
 	  }
-	  console.log('Roundtrip time: ' + (Date.now() - parseInt(data)) + 'ms', flags);
+	  //console.log('Roundtrip time: ' + (Date.now() - parseInt(data)) + 'ms', flags);
 
 	  setTimeout(function timeout() {
 		//ws.send(Date.now().toString(), {mask: true});
@@ -90,7 +111,7 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() { 
  //mainWindow = new BrowserWindow({width: 1500, height: 800, frame: false}); 
- mainWindow = new BrowserWindow({width: 1500, height: 800, nodeIntegration: false}); 
+ mainWindow = new BrowserWindow({width: 1500, height: 800, nodeIntegration: true, frame: true}); 
  mainWindow.loadUrl('file://' + __dirname + '/index.html'); 
  webContents = mainWindow.webContents;
  mainWindow.toggleDevTools();

@@ -1,5 +1,5 @@
 
-<a class="btn btn-default" onclick="ws.send(JSON.stringify({command:'openTextFile', data:'Runtime\\trinitycore\\Auth.log'}));">XXX</a>
+<a class="btn btn-default" onclick="ws.send(JSON.stringify({command:'openTextFile', data:'Bin\\trinitycore\\Auth.log'}));">XXX</a>
           <div class="row animated fadeInRight">
             <div class="col-md-4 col-sm-6 col-xs-12">
               <div class="info-box">
@@ -8,9 +8,9 @@
                 <div class="info-box-content">
 					<span>Authserver&nbsp;<span id="topboxAuthserverVersion"></span></span>
 					<span id="topboxAuthServerText" class="info-box-number">
-						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Runtime\\trinitycore\\authserver.conf'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Bin\\trinitycore\\authserver.conf'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
 						<div style="display: none;">Open authserver.config</div>
-						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Runtime\\trinitycore\\Auth.log'});"><i class="fa fa-file-text-o"></i> Log</a>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Bin\\trinitycore\\Auth.log'});"><i class="fa fa-file-text-o"></i> Log</a>
 						<div style="display: none;">Open authserver.config</div>						
 					</span>
 					<a id="topboxAuthServerBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startAuthserver()">
@@ -26,9 +26,9 @@
                 <div class="info-box-content">
 					<span>Worldserver&nbsp;<span id="topboxWorldserverVersion"></span></span>
 					<span id="topboxWorldServerText" class="info-box-number">
-						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Runtime\\trinitycore\\worldserver.conf'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Bin\\trinitycore\\worldserver.conf'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
 						<div style="display: none;">Open authserver.config</div>
-						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Runtime\\trinitycore\\Server.log'});"><i class="fa fa-file-text-o"></i> Log</a>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Bin\\trinitycore\\Server.log'});"><i class="fa fa-file-text-o"></i> Log</a>
 						<div style="display: none;">Open authserver.config</div>						
 					</span>
 					<a id="topboxWorldServerBtn" class="btn btn-block btn-social btn-success btn-xs" style="margin-top: 10px;" onclick="startWorldserver()">
@@ -44,7 +44,7 @@
                 <div class="info-box-content">
 					<span>MySQL&nbsp;<span id="topboxMySQLVersion"></span></span>
 					<span id="topboxMySQLText" class="info-box-number">
-						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Runtime\\mariadb\\my.ini'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Bin\\mariadb\\my.ini'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
 						<div style="display: none;">Open authserver.config</div>
 						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Data\\logs\\mariadb_error.log'});"><i class="fa fa-file-text-o"></i> Log</a>
 						<div style="display: none;">Open authserver.config</div>						
@@ -62,7 +62,7 @@
                 <div class="info-box-content">
 					<span>Webserver&nbsp;<span id="topboxWebserverVersion"></span></span>
 					<span id="topboxWebserverText" class="info-box-number">
-						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Runtime\\nginx\\conf\\nginx.conf'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Bin\\nginx\\conf\\nginx.conf'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
 						<div style="display: none;">Open authserver.config</div>
 						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Data\\logs\\access.log'});"><i class="fa fa-file-text-o"></i> Access Log&nbsp;</a>
 						<div style="display: none;">Open authserver.config</div>	
@@ -82,7 +82,7 @@
                 <div class="info-box-content">
 					<span>PHP&nbsp;<span id="topboxPhpVersion"></span></span>
 					<span id="topboxPhpText" class="info-box-number">
-						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Runtime\\php\\php.ini'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
+						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Bin\\php\\php.ini'});"><i class="fa fa-pencil"></i> Config&nbsp;</a>
 						<div style="display: none;">Open authserver.config</div>
 						<a class=" btn btn-social btn-default btn-xs qTip" title="Edit Config" onclick="postJsonData({ command: 'openTextFile', data:'Data\\logs\\php_error.log'});"><i class="fa fa-bug"></i> Error Log&nbsp;</a>
 						<div style="display: none;">Open authserver.config</div>						
@@ -229,7 +229,7 @@ $('#develBuildMMOCore').on('click', function(e){
     var self = $(this);
     var url = $(this).data('url');
     var success = function(){
-		edgeRunProcess({"exeFile": "Runtime\\sciprtcs\\scriptcs.exe", "exeFileParameter": "Runtime\\compile_trinity.csx"}, function (error, result) {
+		edgeRunProcess({"exeFile": "Bin\\sciprtcs\\scriptcs.exe", "exeFileParameter": "Bin\\compile_trinity.csx"}, function (error, result) {
 			if (error) throw error;
 			console.log(result);
 		});
@@ -251,7 +251,7 @@ $('#develImportDatabase').on('click', function(e){
     var self = $(this);
     var url = $(this).data('url');
     var success = function(){
-		edgeRunProcessWindow({"exeFile": "Runtime\\sciprtcs\\scriptcs.exe", "exeFileParameter": "Runtime\\install_database.csx"}, function (error, result) {
+		edgeRunProcessWindow({"exeFile": "Bin\\sciprtcs\\scriptcs.exe", "exeFileParameter": "Bin\\install_database.csx"}, function (error, result) {
 			if (error) throw error;
 			console.log(result);
 		});

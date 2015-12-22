@@ -131,7 +131,9 @@ connect();
 </script>
 
 <!-- jQuery and Bootstrap -->
-<script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+
+<!-- We want to use jQuery in Electron -> Ignore if run in normal borwser -->
+<script src="plugins/jQuery/jQuery-2.1.4.min.js" onload="try {window.$ = window.jQuery = module.exports} catch (e){};"></script>
 <script src="plugins/jQueryUI/jquery-ui.min.js"></script>
 <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="plugins/mmowning.js"></script>
@@ -141,6 +143,9 @@ connect();
 
 //Define backend Path -> Needed for all other scripts - Must load before angular and mowning.js
 var getBackEndPath = "http://127.0.0.1:8888";  
+
+//Use Remote if in Electron
+try {var remote = require('remote')} catch(e){};
 </script>
 
 <!-- Peace JS
