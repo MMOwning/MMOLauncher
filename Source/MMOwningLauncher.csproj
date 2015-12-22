@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="Classes\Binaries.cs" />
     <Compile Include="Classes\GetUserAvatar.cs" />
+    <Compile Include="Classes\Helpers.cs" />
     <Compile Include="Classes\ProcessExplorer.cs" />
     <Compile Include="Classes\SysControl.cs" />
     <Compile Include="Forms_Traymenu.cs">

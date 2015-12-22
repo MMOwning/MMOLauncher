@@ -19,6 +19,7 @@ using System.Windows.Forms;
 using MMOLauncher.Web;
 using MMOLauncher.Web.WebSocket;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
@@ -123,8 +124,8 @@ namespace MMOLauncher
 
             CfxRuntime.Shutdown();*/
 
-
             Globals.BinConfig["authserver"] = new Dictionary<string, dynamic>();
+            Globals.BinConfig["authserver"]["autostart"] = false;
             Globals.BinConfig["authserver"]["start"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["authserver"]["start"]["FileName"] = "authserver.exe";
             Globals.BinConfig["authserver"]["start"]["Arguments"] = "-c authserver.conf";
@@ -137,6 +138,7 @@ namespace MMOLauncher
             Globals.BinConfig["authserver"]["stop"]["ShowCmd"] = true;
 
             Globals.BinConfig["worldserver"] = new Dictionary<string, dynamic>();
+            Globals.BinConfig["worldserver"]["autostart"] = false;
             Globals.BinConfig["worldserver"]["start"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["worldserver"]["start"]["FileName"] = "worldserver.exe";
             Globals.BinConfig["worldserver"]["start"]["Arguments"] = "-c worldserver.conf";
@@ -149,6 +151,7 @@ namespace MMOLauncher
             Globals.BinConfig["worldserver"]["stop"]["ShowCmd"] = true;
 
             Globals.BinConfig["nginx"] = new Dictionary<string, dynamic>();
+            Globals.BinConfig["nginx"]["autostart"] = false;
             Globals.BinConfig["nginx"]["start"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["nginx"]["start"]["FileName"] = "Bin\\nginx\\nginx.exe";
             Globals.BinConfig["nginx"]["start"]["Arguments"] = "-c Bin/nginx/conf/nginx.conf";
@@ -161,6 +164,7 @@ namespace MMOLauncher
             Globals.BinConfig["nginx"]["stop"]["ShowCmd"] = true;
 
             Globals.BinConfig["mysql"] = new Dictionary<string, dynamic>();
+            Globals.BinConfig["mysql"]["autostart"] = false;
             Globals.BinConfig["mysql"]["start"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["mysql"]["start"]["FileName"] = "Bin\\mariadb\\bin\\mysqld.exe";
             Globals.BinConfig["mysql"]["start"]["Arguments"] = "";
@@ -173,6 +177,7 @@ namespace MMOLauncher
             Globals.BinConfig["mysql"]["stop"]["ShowCmd"] = true;
 
             Globals.BinConfig["php"] = new Dictionary<string, dynamic>();
+            Globals.BinConfig["php"]["autostart"] = false;
             Globals.BinConfig["php"]["start"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["php"]["start"]["FileName"] = "Bin\\php\\php-cgi.exe";
             Globals.BinConfig["php"]["start"]["Arguments"] = "-b localhost:9100";
@@ -185,9 +190,29 @@ namespace MMOLauncher
             Globals.BinConfig["php"]["stop"]["ShowCmd"] = true;
 
 
-            string json = JsonConvert.SerializeObject(Globals.BinConfig, Formatting.Indented);
+            //Create Config File if not exists
+            if (!File.Exists(Globals.DataPath + "\\BinConfig.json"))
+            {
+                string json = JsonConvert.SerializeObject(Globals.BinConfig, Formatting.Indented);
+                File.WriteAllText(Globals.DataPath + "\\BinConfig.json", json);
+            }
 
-            File.WriteAllText(@"app.json", json);
+            //Read Real Values
+            StreamReader jsonStreamReader = new StreamReader(Globals.DataPath + "\\BinConfig.json");
+            JsonTextReader jsonReader = new JsonTextReader(jsonStreamReader);
+            JsonSerializer jsonSerializer = new JsonSerializer();
+            dynamic binConfigFile = jsonSerializer.Deserialize(jsonReader);
+            jsonStreamReader.Close();
+
+            //Merge Globals.BinConfig and binConfigFile
+            JObject combinedDictJson = Helpers.CombineJson(Globals.BinConfig, binConfigFile);
+            //Switch combinedDictJson to Expando Object -> Needed to write back settings to Globals.MainSettings
+            dynamic combinedDict = new Dictionary<string, dynamic>(Helpers.JObjectToExpandoObject(combinedDictJson));
+            Globals.BinConfig = combinedDict;
+
+            //Save config file
+            string jsonToFile = JsonConvert.SerializeObject(Globals.BinConfig, Formatting.Indented);
+            System.IO.File.WriteAllText(Globals.DataPath + "\\BinConfig.json", jsonToFile);
 
             Application.Run(new Form_TrayMenu());
 

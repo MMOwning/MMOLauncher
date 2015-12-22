@@ -164,33 +164,23 @@ namespace MMOLauncher.Web.Modules
 
                 var results = JsonConvert.DeserializeObject<dynamic>(bodyAsString);
                 string command = null;
-                string data = null;
+                string bin = null;
+                string fileName = "";
+                string arguments = "";
+                string workingDirectory = "";
+                //bool showCmd = false;
+                
 
                 if (results.Property("command") != null) command = results.command;
-                if (results.Property("data") != null) data = results.data;
+                if (results.Property("bin") != null) bin = results.bin;
+                if (results.Property("fileName") != null) fileName = results.fileName;
+                if (results.Property("arguments") != null) arguments = results.arguments;
+                if (results.Property("workingDirectory") != null) workingDirectory = results.workingDirectory;
+                //if (results.Property("showCmd") != "") showCmd = results.showCmd;
 
+                Binaries.RunProgram(command, bin, fileName, arguments, workingDirectory);
 
-                if (command == "toggle")
-                {
-                    if (Globals.RunningProcesses[data])
-                    {
-                        command = "stop";
-                    }
-                    else
-                    {
-                        command = "start";
-                    }
-
-                    if (Globals.BinConfig[data][command]["FileName"] == "kill")
-                    {
-                        Binaries.RunProgram("kill", "", Globals.BinConfig[data][command]["Arguments"], "", false);
-                    }
-                    else
-                    {
-                        Binaries.RunProgram(command, Globals.BinConfig[data][command]["FileName"], Globals.BinConfig[data][command]["Arguments"], Globals.BinConfig[data][command]["WorkingDirectory"], Globals.BinConfig[data][command]["ShowCmd"]);
-                    }
-                }
-                return command + " for " + data + " executed";
+                return command + " for " + bin + " executed";
             };
 
 

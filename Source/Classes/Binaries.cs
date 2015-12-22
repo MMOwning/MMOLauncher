@@ -88,6 +88,7 @@ namespace MMOLauncher.Classes
                 }
                 else
                 {
+                    cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                     cmd.StartInfo.FileName = fileName;
                     if (arguments != "")
                     {
