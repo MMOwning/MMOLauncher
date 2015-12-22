@@ -3,16 +3,20 @@ using System.IO;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Owin;
-using Owin.WebSocket.Extensions;
+//using Owin.WebSocket.Extensions;
 using System.Runtime.ExceptionServices;
 using Microsoft.Owin.Hosting;
+using MMOLauncher.Web.WebSocket;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Conventions;
 using Nancy.ErrorHandling;
+using WebSocketSharp;
+using WebSocketSharp.Server;
 
 namespace MMOLauncher.Web
 {
+
     class StartUp
     {
         IDisposable _server;
@@ -21,8 +25,9 @@ namespace MMOLauncher.Web
         {
             public void Configuration(IAppBuilder app)
             {
+                
                 app.UseCors(CorsOptions.AllowAll);
-                app.MapWebSocketRoute<WebSocket.MyWebSocket>("/ws");
+                //app.MapWebSocketRoute<WebSocket.MyWebSocket>("/ws");
                 app.Map("/signalr", map =>
                 {
                     // Setup the CORS middleware to run before SignalR.
@@ -53,6 +58,8 @@ namespace MMOLauncher.Web
         }
 
 
+
+
         public void StartRun()
         {
             var options = new StartOptions()
@@ -63,6 +70,20 @@ namespace MMOLauncher.Web
 
             Console.WriteLine("Running a http server on port 8888");
             _server = WebApp.Start<Startup>(options);
+
+            /****************************************************************************************/
+            /* Websocket Start                                                                      */
+            /****************************************************************************************/
+            Globals.GlobalWebsocketServer = new WebSocketServer(8889);
+            Globals.GlobalWebsocketServer.AddWebSocketService<Echo>("/Echo");
+            Globals.GlobalWebsocketServer.AddWebSocketService<Electron>("/Electron");
+            
+            Globals.GlobalWebsocketServer.Start();
+            /****************************************************************************************/
+            /* Websocket End                                                                      */
+            /****************************************************************************************/
+
+
         }
 
     }

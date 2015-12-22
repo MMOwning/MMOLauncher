@@ -71,7 +71,7 @@ namespace MMOLauncher.Web.Modules
         {
             Get["/checkRunningPrograms"] = _ =>
             {
-                RunningProcesses["nginx_status"] = false;
+                /*RunningProcesses["nginx_status"] = false;
                 RunningProcesses["php_status"] = false;
                 RunningProcesses["mysql_status"] = false;
                 RunningProcesses["authserver_status"] = false;
@@ -101,8 +101,8 @@ namespace MMOLauncher.Web.Modules
                     {
                         RunningProcesses["worldserver_status"] = true;
                     }
-                }
-                var output = JsonConvert.SerializeObject(RunningProcesses);
+                }*/
+                var output = JsonConvert.SerializeObject(Globals.RunningProcesses);
                 return output;
             };
 
