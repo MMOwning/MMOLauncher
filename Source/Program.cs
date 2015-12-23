@@ -84,11 +84,6 @@ namespace MMOwningLauncher
                 Directory.CreateDirectory(Globals.DataPath);
             }
 
-            if (!Directory.Exists(Globals.BasePath + "\\Bin"))
-            {
-                Directory.CreateDirectory(Globals.BasePath + "\\Bin");
-            }
-
             if (!Directory.Exists(Globals.BasePath + "\\Logs"))
             {
                 Directory.CreateDirectory(Globals.BasePath + "\\Logs");
@@ -112,6 +107,7 @@ namespace MMOwningLauncher
             Globals.MainConfig["mainConfig"] = new Dictionary<string, dynamic>();
             Globals.MainConfig["downloadUrls"] = new Dictionary<string, dynamic>();
             Globals.MainConfig["downloadUrls"]["electron"] = "https://github.com/atom/electron/releases/download/v0.36.1/electron-v0.36.1-win32-ia32.zip";
+            Globals.MainConfig["downloadUrls"]["mmowning_bin"] = "https://github.com/MMOwning/MMOLauncher/releases/download/0.5.0.0/Bin_0.5.0.0.7z";
 
             Globals.BinConfig["authserver"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["authserver"]["autostart"] = false;
@@ -197,6 +193,26 @@ namespace MMOwningLauncher
 
                     //Check if the file is etxracted to subfolder - Files on github includes branch name -> Correct this
                     Directory.Move(Globals.AppPath + "\\Runtime\\Temp\\Extract", Globals.AppPath + "\\Runtime\\Electron");
+                    Directory.Delete(Globals.AppPath + "\\Runtime\\Temp\\", true);
+                }
+            }
+
+            //Download Electron if not exist
+            if (!Directory.Exists(Globals.BasePath + "\\Bin"))
+            {
+                Directory.CreateDirectory(Globals.AppPath + "\\Runtime\\Temp\\Download");
+                Form_Download downloadForm = new Form_Download(Globals.MainConfig["downloadUrls"]["mmowning_bin"], Globals.AppPath + "\\Runtime\\Temp\\Download\\mmo_bin.zip");
+
+                if (downloadForm.ShowDialog() == DialogResult.OK)
+                {
+                    Directory.CreateDirectory(Globals.AppPath + "\\Runtime\\Temp\\Extract");
+                    Helpers.ExtractFile(Globals.AppPath + "\\Runtime\\Temp\\Download\\mmo_bin.zip", Globals.AppPath + "\\Runtime\\Temp\\Extract");
+
+                    DirectoryInfo dinfo = new DirectoryInfo(Globals.AppPath + "\\Runtime\\Temp\\Extract");
+                    DirectoryInfo[] directorys = dinfo.GetDirectories();
+
+                    //Check if the file is etxracted to subfolder - Files on github includes branch name -> Correct this
+                    Directory.Move(Globals.AppPath + "\\Runtime\\Temp\\Extract", Globals.BasePath + "\\Bin");
                     Directory.Delete(Globals.AppPath + "\\Runtime\\Temp\\", true);
                 }
             }

@@ -26,8 +26,8 @@ logs/*
 !/mmowning/start_cmake.bat
 
 
-
-
+[bB]inClean/
+[bB]in/
 
 App/*.*
 [Dd]ata/
