@@ -157,9 +157,9 @@ namespace MMOwningLauncher
         private void ShowElectron(object sender, EventArgs e)
         {
             Process cmd = new Process();
-            cmd.StartInfo.FileName = Globals.BasePath + "\\App\\app\\node_modules\\electron-prebuilt\\dist\\electron.exe";
-            cmd.StartInfo.WorkingDirectory = Globals.BasePath + "\\App\\app\\node_modules\\electron-prebuilt\\dist";
-            cmd.StartInfo.Arguments = Globals.BasePath + "\\App\\app";
+            cmd.StartInfo.FileName = Globals.AppPath + "\\Runtime\\Electron\\electron.exe";
+            cmd.StartInfo.WorkingDirectory = Globals.AppPath + "\\Runtime\\Electron";
+            cmd.StartInfo.Arguments = Globals.AppPath + "\\app";
             cmd.Start();
         }
 

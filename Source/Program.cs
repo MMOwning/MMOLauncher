@@ -44,7 +44,7 @@ namespace MMOwningLauncher
             var checkAdminstrator = new IsUserAdministrator();
             Globals.RuntimeSettings["platform"]["runningasadmin"] = checkAdminstrator.Check();
 
-            Globals.MainSettings["mainConfig"] = new Dictionary<string, dynamic>();
+            
 
             Globals.RuntimeSettings["windows"] = new Dictionary<string, dynamic>();
             Globals.RuntimeSettings["windows"]["currentUser"] = Environment.UserName;
@@ -107,6 +107,11 @@ namespace MMOwningLauncher
             var webServer = new Web.StartUp();
             webServer.StartRun();
 
+
+
+            Globals.MainConfig["mainConfig"] = new Dictionary<string, dynamic>();
+            Globals.MainConfig["downloadUrls"] = new Dictionary<string, dynamic>();
+            Globals.MainConfig["downloadUrls"]["electron"] = "https://github.com/atom/electron/releases/download/v0.36.1/electron-v0.36.1-win32-ia32.zip";
 
             Globals.BinConfig["authserver"] = new Dictionary<string, dynamic>();
             Globals.BinConfig["authserver"]["autostart"] = false;
@@ -173,10 +178,30 @@ namespace MMOwningLauncher
             Globals.BinConfig["php"]["stop"]["WorkingDirectory"] = "";
             Globals.BinConfig["php"]["stop"]["ShowCmd"] = false;
 
-            Helpers.MergeCsDictionaryAndSave(Globals.BinConfig, Globals.DataPath + "\\BinConfig.json");
+            Helpers.MergeCsDictionaryAndSave(Globals.MainConfig, Globals.DataPath + "\\MainConfig.json");
+            Helpers.MergeCsDictionaryAndSave(Globals.BinConfig, Globals.DataPath + "\\BinConfig.json");           
+
+            //Download Electron if not exist
+            if (!Directory.Exists(Globals.AppPath + "\\Runtime\\Electron"))
+            {
+                Directory.CreateDirectory(Globals.AppPath + "\\Runtime\\Temp\\Download");
+                Form_Download downloadForm = new Form_Download(Globals.MainConfig["downloadUrls"]["electron"], Globals.AppPath + "\\Runtime\\Temp\\Download\\electron.zip");
+
+                if (downloadForm.ShowDialog() == DialogResult.OK)
+                {
+                    Directory.CreateDirectory(Globals.AppPath + "\\Runtime\\Temp\\Extract");
+                    Helpers.ExtractFile(Globals.AppPath + "\\Runtime\\Temp\\Download\\electron.zip", Globals.AppPath + "\\Runtime\\Temp\\Extract");
+
+                    DirectoryInfo dinfo = new DirectoryInfo(Globals.AppPath + "\\Runtime\\Temp\\Extract");
+                    DirectoryInfo[] directorys = dinfo.GetDirectories();
+
+                    //Check if the file is etxracted to subfolder - Files on github includes branch name -> Correct this
+                    Directory.Move(Globals.AppPath + "\\Runtime\\Temp\\Extract", Globals.AppPath + "\\Runtime\\Electron");
+                    Directory.Delete(Globals.AppPath + "\\Runtime\\Temp\\", true);
+                }
+            }
 
             Application.Run(new Form_TrayMenu());
-
         }
     }
 
@@ -190,7 +215,7 @@ namespace MMOwningLauncher
 
         public static Dictionary<string, dynamic> AppsDictionary = new Dictionary<string, dynamic>();
         public static Dictionary<string, dynamic> WindowsStartMenu = new Dictionary<string, dynamic>();
-        public static Dictionary<string, dynamic> MainSettings = new Dictionary<string, dynamic>();
+        public static Dictionary<string, dynamic> MainConfig = new Dictionary<string, dynamic>();
         public static Dictionary<string, dynamic> RuntimeSettings = new Dictionary<string, dynamic>();
         public static Dictionary<string, dynamic> Folders = new Dictionary<string, dynamic>();
         public static Dictionary<string, dynamic> GamePadProfile = new Dictionary<string, dynamic>();

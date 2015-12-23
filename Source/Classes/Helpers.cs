@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,69 @@ namespace MMOwningLauncher.Classes
 {
     class Helpers
     {
+
+        public static void ExtractFile(string source, string destination)
+        {
+            string zPath = Globals.AppPath + "\\Runtime\\7zip\\7zG.exe";
+            try
+            {
+                ProcessStartInfo pro = new ProcessStartInfo();
+                //pro.WindowStyle = ProcessWindowStyle.Hidden;
+                pro.FileName = zPath;
+                pro.Arguments = "x \"" + source + "\" -o" + destination;
+                Process x = Process.Start(pro);
+                x.WaitForExit();
+            }
+            catch (System.Exception Ex)
+            {
+                //DO logic here 
+            }
+        }
+
+        public static void CreateZip(string source, string destination)
+        {
+            //string source = @"d:\a\example.txt";
+            //string destination = @"d:\a\123.zip";
+            ProcessStartInfo p = new ProcessStartInfo();
+            p.FileName = Globals.AppPath + "\\Runtime\\7zip\\7zG.exe";
+            p.Arguments = "a -tgzip \"" + source + "\" \"" + destination + "\" -mx=9";
+            //p.WindowStyle = ProcessWindowStyle.Hidden;
+            Process x = Process.Start(p);
+            x.WaitForExit();
+        }
+
+        public static void Copy(string sourceDirectory, string targetDirectory)
+        {
+            DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
+            DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
+
+            CopyAll(diSource, diTarget);
+        }
+
+        public static void CopyAll(DirectoryInfo source, DirectoryInfo target)
+        {
+            Directory.CreateDirectory(target.FullName);
+
+            // Copy each file into the new directory.
+            foreach (FileInfo fi in source.GetFiles())
+            {
+                Console.WriteLine(@"Copying {0}\{1}", target.FullName, fi.Name);
+                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+            }
+
+            // Copy each subdirectory using recursion.
+            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+            {
+                DirectoryInfo nextTargetSubDir =
+                    target.CreateSubdirectory(diSourceSubDir.Name);
+                CopyAll(diSourceSubDir, nextTargetSubDir);
+            }
+        }
+
+
+
+
+
         //http://stackoverflow.com/questions/13793560/find-closest-match-to-input-string-in-a-list-of-strings
         public static int FindBestMatch(string s, string t)
         {
