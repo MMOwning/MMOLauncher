@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "MMOwningLauncherApp", "App\app\MMOwningLauncherApp.njsproj", "{4974A314-76A4-4198-A1FF-203F4C436AB9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4974A314-76A4-4198-A1FF-203F4C436AB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4974A314-76A4-4198-A1FF-203F4C436AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4974A314-76A4-4198-A1FF-203F4C436AB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4974A314-76A4-4198-A1FF-203F4C436AB9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
