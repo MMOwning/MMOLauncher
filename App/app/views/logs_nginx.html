@@ -166,25 +166,25 @@ var pagefunction = function() {
 }
 
 function redrawWithNewCount(t, row_count) {
-    //Lifted more or less right out of the DataTables source
-    var oSettings = t.fnSettings();
-    oSettings._iDisplayLength = parseInt(row_count, 10);
-    t._fnCalculateEnd( oSettings );
-    /* If we have space to show extra rows (backing up from the end point - then do so */
-    if ( oSettings.fnDisplayEnd() == oSettings.fnRecordsDisplay() )
-    {
-      oSettings._iDisplayStart = oSettings.fnDisplayEnd() - oSettings._iDisplayLength;
-      if ( oSettings._iDisplayStart < 0 )
-      {
-        oSettings._iDisplayStart = 0;
-      }
-    }
-    if ( oSettings._iDisplayLength == -1 )
-    {
-      oSettings._iDisplayStart = 0;
-    }
-    t.fnDraw( oSettings );
-    return t;
+	//Lifted more or less right out of the DataTables source
+	var oSettings = t.fnSettings();
+	oSettings._iDisplayLength = parseInt(row_count, 10);
+	t._fnCalculateEnd( oSettings );
+	/* If we have space to show extra rows (backing up from the end point - then do so */
+	if ( oSettings.fnDisplayEnd() == oSettings.fnRecordsDisplay() )
+	{
+	  oSettings._iDisplayStart = oSettings.fnDisplayEnd() - oSettings._iDisplayLength;
+	  if ( oSettings._iDisplayStart < 0 )
+	  {
+		oSettings._iDisplayStart = 0;
+	  }
+	}
+	if ( oSettings._iDisplayLength == -1 )
+	{
+	  oSettings._iDisplayStart = 0;
+	}
+	t.fnDraw( oSettings );
+	return t;
 }
 
 loadScript("plugins/datatables/jquery.dataTables.js", function(){

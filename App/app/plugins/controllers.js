@@ -10,7 +10,7 @@ function MainCtrl($scope, $http) {
   //Backend Path get set in indem html before angular is loaded
   $scope.GetBackendPath = getBackEndPath;
   $http.get(getBackEndPath + '/getPlatform').
-    success(function(data, status, headers, config) {
+	success(function(data, status, headers, config) {
 	  $scope.getUserName = data.username;
 	  $scope.getOS = data.os;
 	  $scope.getComputername = data.computername;
@@ -20,24 +20,24 @@ function MainCtrl($scope, $http) {
 	  } else {
 		  $scope.getUAC = "User";
 	  }
-    }).
-    error(function(data, status, headers, config) {
+	}).
+	error(function(data, status, headers, config) {
 	  $scope.getUserName = "";
 	  $scope.getOS = "";
 	  $scope.getComputername = "";
 	  $scope.getUAC = "User";
-    });	
+	});	
 	
-    //this.userName = 'Example user';
-    this.helloText = 'Welcome in SeedProject';
-    this.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.';
+	//this.userName = 'Example user';
+	this.helloText = 'Welcome in SeedProject';
+	this.descriptionText = 'It is an application skeleton for a typical AngularJS web app. You can use it to quickly bootstrap your angular webapp projects and dev environment for these projects.';
 
 };
 
 
 angular
-    .module('cyadmin')
-    .controller('MainCtrl', MainCtrl)
+	.module('cyadmin')
+	.controller('MainCtrl', MainCtrl)
 	.controller('DashboardCtrl', function($scope, $rootScope) {
 		checkServerVersion();
 		checkRunningApps();

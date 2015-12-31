@@ -10,32 +10,32 @@
 
 <head>
 
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <!-- Page title set in pageTitle directive -->
-    <title page-title></title>
+	<!-- Page title set in pageTitle directive -->
+	<title page-title></title>
 
-    <!-- Google Open Sans -->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+	<!-- Google Open Sans -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
-    <!-- qTip -->
-    <link rel="stylesheet" href="plugins/jquery.qtip/jquery.qtip.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="plugins/adminlte/css/AdminLTE.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="plugins/adminlte/css/skins/_all-skins.min.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
-    <!-- Animte CSS -->
-    <link rel="stylesheet" href="plugins/animate.css" >
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.5 -->
+	<link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+	<!-- qTip -->
+	<link rel="stylesheet" href="plugins/jquery.qtip/jquery.qtip.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="plugins/adminlte/css/AdminLTE.css">
+	<!-- AdminLTE Skins. Choose a skin from the css/skins
+		 folder instead of downloading all of them to reduce the load. -->
+	<link rel="stylesheet" href="plugins/adminlte/css/skins/_all-skins.min.css">
+	<!-- iCheck -->
+	<link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
+	<!-- Animte CSS -->
+	<link rel="stylesheet" href="plugins/animate.css" >
 	<!-- MMOwning CSS -->
 	<link rel="stylesheet" href="plugins/mmowning.css" >
 
@@ -52,20 +52,20 @@
 
 <!-- Modal Window  -->
 <div id="main_confirmation" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Confirmation</h4>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Confirmation</h4>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- jQuery 2.1.4 -->
@@ -86,21 +86,21 @@ var reconnectInterval = 3000;
 
 var connect = function(){
 	console.log('test');
-    ws = new WebSocket('ws://127.0.0.1:1415/ws');
-    ws.on('open', function() {
-        console.log('socket open');
+	ws = new WebSocket('ws://127.0.0.1:1415/ws');
+	ws.on('open', function() {
+		console.log('socket open');
 		//ws.send(Date.now().toString(), {mask: true});
 		
 
-    });
-    ws.on('error', function() {
-        console.log('socket error');
+	});
+	ws.on('error', function() {
+		console.log('socket error');
 		setTimeout(connect, reconnectInterval);
-    });
-    ws.on('close', function() {
-        console.log('socket close');
-        setTimeout(connect, reconnectInterval);
-    });
+	});
+	ws.on('close', function() {
+		console.log('socket close');
+		setTimeout(connect, reconnectInterval);
+	});
 	
 	ws.on('message', function message(data, flags) {
 	  console.log(data);

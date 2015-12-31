@@ -25,7 +25,7 @@ ws.on('message', function message(data, flags) {
   console.log('Roundtrip time: ' + (Date.now() - parseInt(data)) + 'ms', flags);
 
   setTimeout(function timeout() {
-    ws.send(Date.now().toString(), {mask: true});
+	ws.send(Date.now().toString(), {mask: true});
   }, 500);
 });
 */
@@ -36,19 +36,19 @@ var reconnectInterval = 3000;
 
 var connect = function(){
 	console.log('test');
-    ws = new WebSocket('ws://127.0.0.1:8889/Electron');
-    ws.on('open', function() {
-        console.log('socket open');
+	ws = new WebSocket('ws://127.0.0.1:8889/Electron');
+	ws.on('open', function() {
+		console.log('socket open');
 		//ws.send(Date.now().toString(), {mask: true});
-    });
-    ws.on('error', function() {
-        console.log('socket error');
+	});
+	ws.on('error', function() {
+		console.log('socket error');
 		setTimeout(connect, reconnectInterval);
-    });
-    ws.on('close', function() {
-        console.log('socket close');
-        setTimeout(connect, reconnectInterval);
-    });
+	});
+	ws.on('close', function() {
+		console.log('socket close');
+		setTimeout(connect, reconnectInterval);
+	});
 	
 	ws.on('message', function message(data, flags) {
 	  console.log(data);
@@ -111,10 +111,10 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() { 
  //mainWindow = new BrowserWindow({width: 1500, height: 800, frame: false}); 
- mainWindow = new BrowserWindow({width: 1500, height: 800, nodeIntegration: true, frame: false}); 
+ mainWindow = new BrowserWindow({width: 1500, height: 800, nodeIntegration: true, frame: true}); 
  mainWindow.loadUrl('file://' + __dirname + '/index.html'); 
  webContents = mainWindow.webContents;
- //mainWindow.toggleDevTools();
+ mainWindow.toggleDevTools();
  mainWindow.on('closed', function() {
  mainWindow = null;
  }); 

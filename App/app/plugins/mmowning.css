@@ -1,9 +1,9 @@
 .info-box>.badge {
-    position: absolute;
+	position: absolute;
 	top: 7px;
-    right: 25px;
-    font-size: 10px;
-    font-weight: 400;
+	right: 25px;
+	font-size: 10px;
+	font-weight: 400;
 }
 
 a {
@@ -52,19 +52,19 @@ button {
 }
 /*
 #wrapper{
-    background: #ecf0f5 url("http://www.mmowning.de/neuneu.jpg") 50% 0 no-repeat !important;
+	background: #ecf0f5 url("http://www.mmowning.de/neuneu.jpg") 50% 0 no-repeat !important;
 }
 
 .content-wrapper, .right-side {
-    min-height: 100%;
-    background-color: transparent !important;
-    z-index: 800;
+	min-height: 100%;
+	background-color: transparent !important;
+	z-index: 800;
 }
 
 
 .skin-green .wrapper, .skin-green .main-sidebar, .skin-green .left-side {
-    background-color: #222d32;
-    background: rgba(0,0,0,0.35);
+	background-color: #222d32;
+	background: rgba(0,0,0,0.35);
 }
 */
 
@@ -82,11 +82,11 @@ button {
 	}
 	
 .user-panel {
-    display: none;
+	display: none;
 }	
 
 .skin-green .sidebar-form {
-    display: none;
+	display: none;
 }
 	
 }
@@ -113,7 +113,7 @@ button {
 
  
 table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting {
-    padding-right: 20px;
+	padding-right: 20px;
 }
 
 /*************************************************************************************************
@@ -121,52 +121,52 @@ table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_des
 *************************************************************************************************/
 
 table.display tr.odd.greenCell {
-    background-color: #DDFFDD;
+	background-color: #DDFFDD;
 	background: rgba(0,255,0,0.2);
 }
 table.display tr.even.greenCell {
-    background-color: #EEFFEE;
+	background-color: #EEFFEE;
 	background: rgba(0,125,0,0.2);
 }
 table.display tr.odd.blueCell {
-    background-color: #DDDDFF;
+	background-color: #DDDDFF;
 	background: rgba(0,0,255,0.2);
 }
 table.display tr.even.blueCell {
-    background-color: #EEEEFF;
+	background-color: #EEEEFF;
 	background: rgba(0,0,125,0.2);
 }
 table.display tr.odd.greyCell {
-    background-color: #DDDDDD;
+	background-color: #DDDDDD;
 	background: rgba(200,200,200,0.2);
 }
 table.display tr.even.greyCell {
-    background-color: #EEEEEE;
+	background-color: #EEEEEE;
 	background: rgba(100,100,100,0.2);
 }
 table.display tr.odd.redCell {
-    background-color: #FFDDDD;
+	background-color: #FFDDDD;
 	background: rgba(255,0,0,0.2);
 }
 table.display tr.even.redCell {
-    background-color: #FFEEEE;
+	background-color: #FFEEEE;
 	background: rgba(150,0,0,0.2);
 }
 table.display tr.odd.yellowCell {
-    background-color: #ECFFB3;
+	background-color: #ECFFB3;
 	background: rgba(255,255,0,0.2);
 }
 table.display tr.even.yellowCell {
-    background-color: #E6FF99;
+	background-color: #E6FF99;
 	background: rgba(125,125,0,0.2);
 }
 
 /*.table-round  tr.odd {
-    background-color: #f3f4f5;
+	background-color: #f3f4f5;
 	background: rgba(0,0,0,0.2);
 }
 .table-round  tr.even {
-    background-color: #FFFFFF;
+	background-color: #FFFFFF;
 	background: rgba(0,0,0,0.4);
 }*/
 
@@ -187,9 +187,9 @@ table.display tr.even.yellowCell {
 }
 */
 .table-round div.dataTables_info {
-    padding: 10px;
+	padding: 10px;
 	padding-top: 20px !important;
 }
 .table-round div.dataTables_paginate {
-    padding: 10px;
+	padding: 10px;
 }

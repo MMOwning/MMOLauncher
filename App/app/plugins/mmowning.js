@@ -283,6 +283,32 @@ function startPhp() {
 		}
 };
 
+function startPostgre() {
+		if (process_status['postgres'] == true)
+		{
+			postJsonData({ command: 'start', data:'Bin\\pgsql\\bin\\pg_ctl.exe', parameter:'stop --pgdata /bin/pgsql/data --log /logs/postgresql.log --mode=fast -W', path:'', showcmd: true});		
+		} else {
+			postJsonData({ command: 'start', data:'Bin\\pgsql\\bin\\pg_ctl.exe', parameter:'--pgdata /bin/pgsql/data --log /logs/postgresql.log start', parameter:'', path:'', showcmd: true});		
+		}
+};
+
+function startMongoDb() {
+		if (process_status['mongo'] == true)
+		{
+			postJsonData({ command: 'start', data:'bin\\mongodb\\bin\\mongo.exe', parameter:' --eval "db.getSiblingDB(\'admin\').shutdownServer()"', path:'', showcmd: true});		
+		} else {
+			postJsonData({ command: 'start', data:'bin\\mongodb\\bin\\mongo.exe', parameter:'--config /bin/mongodb/mongodb.conf --dbpath /bin/mongodb/data/db --logpath /logs/mongodb.log --rest', parameter:'', path:'', showcmd: true});		
+		}
+};
+
+function startMemcached() {
+		if (process_status['memcached'] == true)
+		{
+			postJsonData({ command: 'kill', data:'memcached'});	
+		} else {
+			postJsonData({ command: 'start', data:'bin\\\\memcached\\memcached.exe', parameter:'', parameter:'', path:'', showcmd: true});		
+		}
+};
 
 var jsArray = {};
 
@@ -333,7 +359,7 @@ var jsArray = {};
 *************************************************************************************************/
 function loadExternal(src) {
 	$('#ui-view').html('<iframe id="frame" src="' + src + '" width="100%" frameBorder="0" style="margin: -15px !important;"></iframe>');
-    $('iframe#frame').load(function() {
+	$('iframe#frame').load(function() {
 		//alert("loaded");	
 		$('#frame').css('height', $(window).height() - 55);
 		/*var head = jQuery("#frame").contents().find("head");
@@ -341,7 +367,7 @@ function loadExternal(src) {
 				  '#banner{display:none}; ' +
 				  '</style>';
 		jQuery(head).append(css);			*/
-    });	
+	});	
 }
 
 function getMenuIcon(key) {
@@ -406,11 +432,11 @@ function runJsInterval(script, str, delay){
 }
 
 function clearJsInterval(){
-    for (var key in jsInterval) {
-        clearInterval(jsInterval[key]);
+	for (var key in jsInterval) {
+		clearInterval(jsInterval[key]);
 		jsInterval[key] = null;
 		delete jsInterval[key];		
-    }
+	}
 }
 /*************************************************************************************************
 	Setup Page -> Should be called on each site
