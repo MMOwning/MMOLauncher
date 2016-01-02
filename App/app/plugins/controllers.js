@@ -51,3 +51,22 @@ angular
 			clearInterval(checkRunningAppsInterval);		
 		});
 	})
+	.controller('ConfigCtrl', function ($scope, $http, $interval) {
+		$http.get('/config')
+		   .then(function (res) {
+			$scope.cybeSystemsMainSettings = res.data;
+		});
+	
+		$('#mainConfigForm').find(':input').each(function () {
+			$(this).on("propertychange, change, keyup, paste, input", function () {
+				event.preventDefault();
+                postFormDataEncodeUriAngular("mainConfigForm", "/config/config_save", false);
+			});
+			$(this).on('ifChanged', function (event) {
+				event.preventDefault();
+                postFormDataEncodeUriAngular("mainConfigForm", "/config/config_save", false);
+			});
+		
+		
+		});
+	})

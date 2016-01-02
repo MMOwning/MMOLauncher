@@ -175,6 +175,62 @@ function iboxToolsFullScreen($timeout) {
 
 
 
+
+/**
+ * iCheck
+ */
+function iCheck($timeout) {
+    var directive = {
+        restrict: 'A',
+        require: 'ngModel',
+        scope: {
+            model: '=ngModel'
+        },
+        link: linkFn
+    };
+    return directive;
+    
+    function linkFn(scope, element, attrs, ngModel) {
+        $timeout(function () {
+            $(element).iCheck({
+                //checkboxClass: attrs.icheck,
+                //radioClass: attrs.icheck
+                checkboxClass: 'icheckbox_minimal-blue',
+                radioClass: 'iradio_minimal-blue'
+            })
+        .on('ifChanged', onChanged); 
+            update(ngModel.$modelValue);
+        });
+        
+        var watchModel = scope.$watch(function () {
+            return ngModel.$modelValue;
+        }, update);
+        
+        scope.$on('$destroy', function () {
+            watchModel();
+        });
+        
+        function update(value) {
+            if (attrs.type == 'checkbox') {
+                $(element).iCheck('update');
+            }
+        }
+        
+        function onChanged(event) {
+            if (attrs.type == 'checkbox') {
+                ngModel.$setViewValue(event.target.checked);
+            }
+            if (attrs.type == 'radio') {
+                ngModel.$setViewValue(event.target.value);
+            }
+        }
+    }
+}
+
+
+
+
+
 /**
  *
  * Pass all functions into module
@@ -186,4 +242,5 @@ angular
 	.directive('iboxTools', iboxTools)
 	.directive('minimalizaSidebar', minimalizaSidebar)
 	.directive('controlSidebar', controlSidebar)
-	.directive('iboxToolsFullScreen', iboxToolsFullScreen);
+	.directive('iboxToolsFullScreen', iboxToolsFullScreen)
+	.directive('iCheck', iCheck);

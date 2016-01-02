@@ -23,6 +23,10 @@ namespace MMOwningLauncher
 {
     public partial class Form_TrayMenu : Form
     {
+
+        //Define MainWindow for delegate in e.g JsonRPC
+        internal static Form_TrayMenu MainWindowThread;
+
         public Form_TrayMenu()
         {
             InitializeComponent();
@@ -65,78 +69,39 @@ namespace MMOwningLauncher
 
         private void ContextMenuStrip1Opening()
         {
+
             contextMenuStrip1.Items.Clear();
 
-            var nginxMenu = new ToolStripMenuItem("nginx");
-            contextMenuStrip1.Items.Add(nginxMenu);
-            if (Globals.RunningProcesses["nginx"])
-            {
-                nginxMenu.Image = Resources.ok;
-                nginxMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "nginx", "stop"); });
-                nginxMenu.DropDownItems.Add("Restart", Resources.redo, (sender, e) => { RunBin_Click(sender, e, "nginx", "restart"); });
-            }
-            else
-            {
-                nginxMenu.Image = Resources.no;
-                nginxMenu.DropDownItems.Add("Start", Resources.ok, (sender, e) => { RunBin_Click(sender, e, "nginx", "start"); });
-            }
 
-            var phpMenu = new ToolStripMenuItem("php");
-            contextMenuStrip1.Items.Add(phpMenu);
-            if (Globals.RunningProcesses["php"])
-            {
-                phpMenu.Image = Resources.ok;
-                phpMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "php", "stop"); });
-                phpMenu.DropDownItems.Add("Restart", Resources.redo, (sender, e) => { RunBin_Click(sender, e, "php", "restart"); });
-            }
-            else
-            {
-                phpMenu.Image = Resources.no;
-                phpMenu.DropDownItems.Add("Start", Resources.ok, (sender, e) => { RunBin_Click(sender, e, "php", "start"); });
-            }
+            //Set Menu Item
+            var arrayOfAllKeys = Globals.BinConfig.Keys.ToArray();
+            Array.Sort(arrayOfAllKeys);
 
-
-            var mysqlMenu = new ToolStripMenuItem("MySQL");
-            contextMenuStrip1.Items.Add(mysqlMenu);
-            if (Globals.RunningProcesses["mysql"])
+            foreach (dynamic app in arrayOfAllKeys)
             {
-                mysqlMenu.Image = Resources.ok;
-                mysqlMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "mysql", "stop"); });
-                mysqlMenu.DropDownItems.Add("Restart", Resources.redo, (sender, e) => { RunBin_Click(sender, e, "mysql", "restart"); });
-            }
-            else
-            {
-                mysqlMenu.Image = Resources.no;
-                mysqlMenu.DropDownItems.Add("Start", Resources.ok, (sender, e) => { RunBin_Click(sender, e, "mysql", "start"); });
-            }
-
-            var authserverMenu = new ToolStripMenuItem("Auhserver");
-            contextMenuStrip1.Items.Add(authserverMenu);
-            if (Globals.RunningProcesses["authserver"])
-            {
-                authserverMenu.Image = Resources.ok;
-                authserverMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "authserver", "stop"); });
-                authserverMenu.DropDownItems.Add("Restart", Resources.redo, (sender, e) => { RunBin_Click(sender, e, "authserver", "restart"); });
-            }
-            else
-            {
-                authserverMenu.Image = Resources.no;
-                authserverMenu.DropDownItems.Add("Start", Resources.ok, (sender, e) => { RunBin_Click(sender, e, "authserver", "start"); });
-            }
-
-
-            var worldserverMenu = new ToolStripMenuItem("Worldserver");
-            contextMenuStrip1.Items.Add(worldserverMenu);
-            if (Globals.RunningProcesses["worldserver"])
-            {
-                worldserverMenu.Image = Resources.ok;
-                worldserverMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, "worldserver", "stop"); });
-                worldserverMenu.DropDownItems.Add("Restart", Resources.redo, (sender, e) => { RunBin_Click(sender, e, "worldserver", "restart"); });
-            }
-            else
-            {
-                worldserverMenu.Image = Resources.no;
-                worldserverMenu.DropDownItems.Add("Start", Resources.ok, (sender, e) => { RunBin_Click(sender, e, "worldserver", "start"); });
+                //if (Globals.BinConfig[app]["installed"]) {
+                    var runtimeMenu = new ToolStripMenuItem(Globals.BinConfig[app]["name"].ToString());
+                    
+                    contextMenuStrip1.Items.Add(runtimeMenu);
+                    if (Globals.RunningProcesses[app])
+                    {
+                        runtimeMenu.ForeColor = System.Drawing.Color.Green;
+                        if (File.Exists(Globals.Folders["datapath"] + "\\Icons\\" + app + ".png"))
+                        {
+                            //Icon = new BitmapImage(new Uri(Globals.Folders["datapath"] + Globals.AppsDictionary[app]["Icon"], UriKind.Relative));
+                            //runtimeMenu.Image = new Image { Width = 16, Height = 16, Source = Icon };
+                        }
+                        runtimeMenu.Image = Resources.ok;
+                        runtimeMenu.DropDownItems.Add("Stop", Resources.no, (sender, e) => { RunBin_Click(sender, e, app, "stop"); });
+                        runtimeMenu.DropDownItems.Add("Restart", Resources.redo, (sender, e) => { RunBin_Click(sender, e, app, "restart"); });
+                    }
+                    else
+                    {
+                        runtimeMenu.ForeColor = System.Drawing.Color.Red;
+                        runtimeMenu.Image = Resources.no;
+                        runtimeMenu.DropDownItems.Add("Start", Resources.ok, (sender, e) => { RunBin_Click(sender, e, app, "start"); });
+                    }
+                //}
             }
 
             contextMenuStrip1.Items.Add(new ToolStripSeparator());

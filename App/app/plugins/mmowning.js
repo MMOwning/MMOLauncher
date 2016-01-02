@@ -438,6 +438,65 @@ function clearJsInterval(){
 		delete jsInterval[key];		
 	}
 }
+
+
+/*************************************************************************************************
+	Save/Get Form Data
+*************************************************************************************************/		
+function processDate(node) {
+	return false;
+}
+
+function postFormDataEncodeUriAngular(formId, submitUrl, reload) {
+	if (typeof (reload) === 'undefined') reload = true;
+	var formDataField = form2js(formId, '.', true, processDate);
+	$.ajax({
+		type: "POST",
+		url: submitUrl,
+		cache: false,
+		//contentType: 'application/json; charset=utf-8',
+		contentType: "application/json",
+		dataType: 'json',
+		data : JSON.stringify(formDataField, null, null),
+	});
+	if (reload == true) {
+		setTimeout('location.reload();', 100);
+	}
+}
+
+function postFormData(formId, submitUrl, reload) {
+	if (typeof (reload) === 'undefined') reload = true;
+	var formDataField = form2js(formId, '.', true, processDate);
+	$.ajax({
+		type: "POST",	  
+		url: submitUrl,
+		cache: false,
+		contentType: 'application/json; charset=utf-8',
+		dataType: 'json',
+		data: { "jsonData": JSON.stringify(formDataField) },
+	});
+	if (reload == true) {
+		setTimeout('location.reload();', 100);
+	}
+}
+
+function postFormDataEncodeUri(formId, submitUrl, reload) {
+	if (typeof (reload) === 'undefined') reload = true;
+	var formDataField = form2js(formId, '.', true, processDate);
+	$.ajax({
+		type: "POST",	  
+		url: submitUrl,
+		cache: false,
+		//contentType: 'application/json; charset=utf-8',
+		contentType: "application/json",
+		dataType: 'json',
+		data : encodeURIComponent(JSON.stringify(formDataField, null, null)),
+	});
+	if (reload == true) {
+		setTimeout('location.reload();', 100);
+	}
+}
+
 /*************************************************************************************************
 	Setup Page -> Should be called on each site
 *************************************************************************************************/

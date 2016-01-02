@@ -62,19 +62,18 @@ namespace MMOwningLauncher.Web
 
         public void StartRun()
         {
-            var options = new StartOptions()
+            var options = new StartOptions("http://" + Globals.MainConfig["webConfig"]["webHost"] + ":" + Globals.MainConfig["webConfig"]["webPort"])
             {
                 ServerFactory = "Nowin",
-                Port = 8888
             };
 
-            Console.WriteLine("Running a http server on port 8888");
+            Console.WriteLine("Running a http server on port " + Globals.MainConfig["webConfig"]["webPort"].ToString());
             _server = WebApp.Start<Startup>(options);
 
             /****************************************************************************************/
             /* Websocket Start                                                                      */
             /****************************************************************************************/
-            Globals.GlobalWebsocketServer = new WebSocketServer(8889);
+            Globals.GlobalWebsocketServer = new WebSocketServer(int.Parse(Globals.MainConfig["webConfig"]["webSocketPort"].ToString()));
             Globals.GlobalWebsocketServer.AddWebSocketService<Echo>("/Echo");
             Globals.GlobalWebsocketServer.AddWebSocketService<Electron>("/Electron");
             

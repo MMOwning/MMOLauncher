@@ -1,12 +1,119 @@
-<div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="text-center m-t-lg">
-                <h1>
-                    Simple example of second view
-                </h1>
-                <small>Configure in config.js as minor state.</small>
-            </div>
-        </div>
-    </div>
-</div>
+<style>
+/*
+input[type="checkbox"], input[type="radio"] {
+opacity: 100;
+}
+*/
+</style>
+
+<!-- START ACCORDION & CAROUSEL-->
+<div class="row">
+	<div class="col-md-12" id="mainConfigForm" ng-controller="ConfigCtrl">
+		<div class="panel box box-solid">
+			<div class="box-header">
+			<h3 class="box-title">Main Config</h3>
+			</div><!-- /.box-header -->
+			<div class="box-body">
+				<div class="box-group" id="accordion">
+					<!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+					<!-- Main Config -->
+					<div class="box panel box-primary">
+						<div class="box-header" data-toggle="collapse" data-parent="#accordion" href="#mainconfig">
+							<span class="icon"><i class="fa fa-cog"></i></span>
+							<h4 class="box-title">Main</h4>
+							<div class="box-tools pull-right">
+								<a href="#" class="btn" ></a>
+							</div>								
+						</div>
+						<div id="mainconfig" class="panel-collapse collapse in">
+							<div class="box-body" style="padding: 0;">
+								<table class="table table-hover table-striped">
+									<tr>
+										<td class="toolTip" title="<b>App Autostart</b><br><br>If enables all apps that are set to start will autorun if CybeSystems Main Programm starts."> Enable App Autostart <!--<img src="/img/icons/comment.png" class="toolTip" title="<b>App Autostart</b><br><br>If enables all apps that are set to start will autorun if CybeSystems Main Programm starts." />--></td>
+										<td class="on_off_td">
+										<input ng-model="cybeSystemsMainSettings['mainConfig']['autostart']"  i-check type="checkbox" name="mainConfig.autostart" class="on_off_checkbox" ng-checked="cybeSystemsMainSettings['mainConfig']['autostart']" />
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+
+                    <!-- Web Config -->
+                    <div class="box panel box-primary">
+                        <div class="box-header" data-toggle="collapse" data-parent="#accordion" href="#webconfig">
+                            <span class="icon"><i class="fa fa-globe"></i></span>
+                            <h4 class="box-title">MMO Launcher Web</h4>
+                            <div class="box-tools pull-right">
+                                <a href="#" class="btn"></a>
+                            </div>
+                        </div>
+                        <div id="webconfig" class="panel-collapse collapse">
+                            <div class="box-body" style="padding: 0;">
+                                <table class="table table-hover table-striped">
+                                    <tr>
+                                        <td class="toolTip" title="<b>Web Config</b><br><br>Use THIS config system - NOT RECOMMEND TO DEACTIVATE IF YOU ARE NOT ABSOLUTLY SURE WHAT YOU DOING !!!!"> Web Port </td>
+                                        <td>
+                                            <input type="text" class="form-control integer" name="webConfig.webPort" value="{{ cybeSystemsMainSettings['webConfig']['webPort'] }}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="toolTip" title="<b>Web Host</b><br><br>The Host of the Webserver - Enter 0.0.0.0 for the local network or enter 127.0.0.1 for localhost only"> Websocket Port </td>
+                                        <td>
+                                            <input type="text" class="form-control integer" name="webConfig.webSocketPort" value="{{ cybeSystemsMainSettings['webConfig']['webSocketPort'] }}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="toolTip" title="<b>Web port</b><br><br>The default Webport for CybeSystems"> Web Host </td>
+                                        <td>
+                                            <select name="webConfig.webHost" class="form-control select2" style="width: 100%;">
+                                                <option value="0.0.0.0" ng-selected="cybeSystemsMainSettings['webConfig']['webHost'] == '0.0.0.0'">0.0.0.0</option>
+                                                <option value="127.0.0.1" ng-selected="cybeSystemsMainSettings['webConfig']['webHost'] == '127.0.0.1'">127.0.0.1</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+				    <!-- Development Config -->
+                    <div class="box panel box-primary">
+                        <div class="box-header" data-toggle="collapse" data-parent="#accordion" href="#devconfig">
+                            <span class="icon"><i class="fa fa-globe"></i></span>
+                            <h4 class="box-title">MMO Launcher Development</h4>
+                            <div class="box-tools pull-right">
+                                <a href="#" class="btn"></a>
+                            </div>
+                        </div>
+                        <div id="devconfig" class="panel-collapse collapse">
+                            <div class="box-body" style="padding: 0;">
+                                <table class="table table-hover table-striped">
+                                    <tr>
+                                        <td class="toolTip" title="<b>Hardware ID</b><br><br>The DPad Hardware ID"> Electron Download URL </td>
+                                        <td>
+                                            <input type="text" class="form-control string" name="downloadUrls.electron" value="{{ cybeSystemsMainSettings['downloadUrls']['electron'] }}" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="toolTip" title="<b>Hardware ID</b><br><br>The DPad Hardware ID"> MMOwning Binaries </td>
+                                        <td>
+                                            <input type="text" class="form-control string" name="downloadUrls.mmowning_bin" value="{{ cybeSystemsMainSettings['downloadUrls']['mmowning_bin'] }}" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+				</div>
+			</div><!-- /.box-body -->
+		</div><!-- /.box -->
+	</div><!-- /.col -->
+</div><!-- /.row -->
+<!-- END ACCORDION & CAROUSEL-->
+<link href="/plugins/iCheck/all.css" rel="stylesheet" />
+<script src="/plugins/iCheck/icheck.min.js"></script>
+<script src="/plugins/form2js.js"></script>

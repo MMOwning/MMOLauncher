@@ -137,6 +137,9 @@ namespace MMOwningLauncher.Classes
             Globals.RunningProcesses["nginx"] = false;
             Globals.RunningProcesses["php"] = false;
             Globals.RunningProcesses["mysql"] = false;
+            Globals.RunningProcesses["memcached"] = false;
+            Globals.RunningProcesses["mongo"] = false;
+            Globals.RunningProcesses["postgres"] = false;
             Globals.RunningProcesses["authserver"] = false;
             Globals.RunningProcesses["worldserver"] = false;
 
@@ -151,11 +154,22 @@ namespace MMOwningLauncher.Classes
             {
                 Globals.RunningProcesses["php"] = true;
             }
+            if (processListOut.Contains("postgres.exe"))
+            {
+                Globals.RunningProcesses["postgres"] = true;
+            }
+            if (processListOut.Contains("mongo.exe"))
+            {
+                Globals.RunningProcesses["mongo"] = true;
+            }
+            if (processListOut.Contains("memcached.exe"))
+            {
+                Globals.RunningProcesses["memcached"] = true;
+            }
             if (processListOut.Contains("mysqld.exe"))
             {
                 Globals.RunningProcesses["mysql"] = true;
             }
-
             if (processListOut.Contains("authserver.exe"))
             {
                 Globals.RunningProcesses["authserver"] = true;

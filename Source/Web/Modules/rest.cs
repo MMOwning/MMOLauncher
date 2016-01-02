@@ -10,8 +10,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MMOwningLauncher.Classes;
 using Nancy;
+using Nancy.Responses;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -113,11 +115,31 @@ namespace MMOwningLauncher.Web.Modules
                 FileVersion["nginx"] = "unknown";
                 FileVersion["mariadb"] = "unknown";
                 FileVersion["php"] = "unknown";
+                FileVersion["PostgreSQL"] = "unknown";
+                FileVersion["Memcached"] = "unknown";
+                FileVersion["Mongodb"] = "unknown";
                 FileVersion["worldserver"] = "unknown";
                 FileVersion["authserver"] = "unknown";
 
                 //FileVersionInfo.GetVersionInfo(@"D:\MMOLauncher\bin\mariadb\bin\mysqld.exe");
-
+                if (File.Exists(Globals.RuntimePath + "\\pgsql\\bin\\pg_ctl.exe"))
+                {
+                    FileVersionInfo postgreSqlVersion = FileVersionInfo.GetVersionInfo(Globals.RuntimePath + "\\pgsql\\bin\\pg_ctl.exe");
+                    if (postgreSqlVersion.FileVersion != null)
+                        FileVersion["PostgreSQL"] = postgreSqlVersion.FileVersion;
+                }
+                if (File.Exists(Globals.RuntimePath + "\\memcached\\memcached.exe"))
+                {
+                    FileVersionInfo memcachedVersion = FileVersionInfo.GetVersionInfo(Globals.RuntimePath + "\\memcached\\memcached.exe");
+                    if (memcachedVersion.FileVersion != null)
+                        FileVersion["Memcached"] = memcachedVersion.FileVersion;
+                }
+                if (File.Exists(Globals.RuntimePath + "\\mongodb\\bin\\mongod.exe"))
+                {
+                    FileVersionInfo mongodbVersion = FileVersionInfo.GetVersionInfo(Globals.RuntimePath + "\\mongodb\\bin\\mongod.exe");
+                    if (mongodbVersion.FileVersion != null)
+                        FileVersion["Mongodb"] = mongodbVersion.FileVersion;
+                }
                 if (File.Exists(Globals.RuntimePath + "\\nginx\\nginx.exe"))
                 {
                     FileVersionInfo nginxVersion = FileVersionInfo.GetVersionInfo(Globals.RuntimePath + "\\nginx\\nginx.exe");
@@ -443,11 +465,24 @@ namespace MMOwningLauncher.Web.Modules
                 return output;
             };
 
-            Get["/config"] = _ =>
+            Get["/openfile"] = _ =>
             {
-                Console.WriteLine("X");
-                return "XXXXXXXXXXXXXXXXX";
+                var dialog = new OpenFileDialog();
+                var result = Form_TrayMenu.MainWindowThread.Invoke(new Func<OpenFileDialog, DialogResult>((d) => d.ShowDialog()), dialog);
+                /*if ((DialogResult)result == DialogResult.OK)
+                {
+                    var response = (
+                        File.Exists(dialog.FileName)
+                        ? new StreamResponse(null, File.OpenRead(dialog.FileName).ToString())
+                        : Response.AsText(string.Empty)
+                        )
+                        .WithHeader("X-File-Path", dialog.FileName);
+
+                    return response;
+                }*/
+                return Negotiate.WithStatusCode(HttpStatusCode.ClientClosedRequest).WithReasonPhrase("");
             };
+
 
             Get["/websocketClient"] = x =>
             {
@@ -463,6 +498,27 @@ namespace MMOwningLauncher.Web.Modules
                 test.SendText(Encoding.UTF8.GetBytes("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"), true);
                 var context = GlobalHost.ConnectionManager.GetConnectionContext<MyEndPoint>();
                 context.Connection.Broadcast(message);*/
+                return HttpStatusCode.OK;
+            };
+
+            Get["/config"] = _ =>
+            {
+                var output = JsonConvert.SerializeObject(Globals.MainConfig);
+                return output;
+            };
+
+            Post["/config/config_save"] = _ =>
+            {
+                var bodyAsString = "";
+                using (var rdr = new StreamReader(this.Request.Body))
+                {
+                    bodyAsString = rdr.ReadToEnd();
+                }
+                dynamic mainSettingsFile = JsonConvert.DeserializeObject(bodyAsString);
+
+                Globals.MainConfig = Helpers.MergeCsDictionariesAndSave(Globals.MainConfig, mainSettingsFile, Globals.DataPath + "\\MainConfig.json");
+
+                //Console.WriteLine(jsonToFile);
                 return HttpStatusCode.OK;
             };
 

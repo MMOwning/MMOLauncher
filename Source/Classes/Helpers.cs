@@ -180,7 +180,21 @@ namespace MMOwningLauncher.Classes
             return result;
         }
 
-        public static void MergeCsDictionaryAndSave(object csDictionary, string filePath)
+
+        public static dynamic MergeCsDictionariesAndSave(dynamic csDictionary, dynamic json, string filePath)
+        {
+            //Merge csDictionary and filePath
+            JObject combinedDictJson = Helpers.CombineJson(csDictionary, json);
+            //Switch combinedDictJson to Expando Object -> Needed to write back settings to csDictionary
+            dynamic combinedDict = new Dictionary<string, dynamic>(Helpers.JObjectToExpandoObject(combinedDictJson));
+
+            //Save config file
+            string jsonToFile = JsonConvert.SerializeObject(combinedDict, Formatting.Indented);
+            System.IO.File.WriteAllText(filePath, jsonToFile);
+            return combinedDict;
+        }
+
+        public static dynamic MergeCsDictionaryAndSave(dynamic csDictionary, string filePath)
         {
             //Create Config File if not exists
             if (!File.Exists(filePath))
@@ -200,11 +214,12 @@ namespace MMOwningLauncher.Classes
             JObject combinedDictJson = Helpers.CombineJson(csDictionary, binConfigFile);
             //Switch combinedDictJson to Expando Object -> Needed to write back settings to csDictionary
             dynamic combinedDict = new Dictionary<string, dynamic>(Helpers.JObjectToExpandoObject(combinedDictJson));
-            csDictionary = combinedDict;
+            //csDictionary = combinedDict;
 
             //Save config file
-            string jsonToFile = JsonConvert.SerializeObject(csDictionary, Formatting.Indented);
+            string jsonToFile = JsonConvert.SerializeObject(combinedDict, Formatting.Indented);
             System.IO.File.WriteAllText(filePath, jsonToFile);
+            return combinedDict;
         }
 
         /// <summary>
