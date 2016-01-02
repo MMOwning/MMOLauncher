@@ -52,7 +52,8 @@ angular
 		});
 	})
 	.controller('ConfigCtrl', function ($scope, $http, $interval) {
-		$http.get('/config')
+        $scope.GetBackendPath = getBackEndPath;
+		$http.get(getBackEndPath + '/config')
 		   .then(function (res) {
 			$scope.cybeSystemsMainSettings = res.data;
 		});

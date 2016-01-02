@@ -139,6 +139,13 @@ namespace MMOwningLauncher.Web
             base.ConfigureConventions(conventions);
 
         }
+
+
+        protected override void ApplicationStartup(Nancy.TinyIoc.TinyIoCContainer container, IPipelines pipelines)
+        {
+            StaticConfiguration.EnableRequestTracing = true;
+            StaticConfiguration.DisableErrorTraces = false;
+        }
     }
 
     public static class NancyExtensions

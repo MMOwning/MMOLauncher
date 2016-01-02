@@ -29,6 +29,7 @@ namespace MMOwningLauncher
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
             //Add Globals

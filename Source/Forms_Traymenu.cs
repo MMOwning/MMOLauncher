@@ -25,12 +25,12 @@ namespace MMOwningLauncher
     {
 
         //Define MainWindow for delegate in e.g JsonRPC
-        internal static Form_TrayMenu MainWindowThread;
+        internal static Form_TrayMenu mainWindowThread;
 
         public Form_TrayMenu()
         {
             InitializeComponent();
-
+            mainWindowThread = this;
             //Check each second running processes
             var runningProcessTimer = new System.Timers.Timer(1000);
             runningProcessTimer.Elapsed += new ElapsedEventHandler(Binaries.CheckRunningProcessTimer);

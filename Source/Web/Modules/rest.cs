@@ -465,11 +465,11 @@ namespace MMOwningLauncher.Web.Modules
                 return output;
             };
 
-            Get["/openfile"] = _ =>
+            Get["/openFile"] = _ =>
             {
                 var dialog = new OpenFileDialog();
-                var result = Form_TrayMenu.MainWindowThread.Invoke(new Func<OpenFileDialog, DialogResult>((d) => d.ShowDialog()), dialog);
-                /*if ((DialogResult)result == DialogResult.OK)
+                var result = Form_TrayMenu.mainWindowThread.Invoke(new Func<OpenFileDialog, DialogResult>((d) => d.ShowDialog()), dialog);
+                if ((DialogResult)result == DialogResult.OK)
                 {
                     var response = (
                         File.Exists(dialog.FileName)
@@ -477,9 +477,10 @@ namespace MMOwningLauncher.Web.Modules
                         : Response.AsText(string.Empty)
                         )
                         .WithHeader("X-File-Path", dialog.FileName);
-
-                    return response;
-                }*/
+                    //Console.WriteLine(dialog.FileName);
+                    return dialog.FileName;
+                    //return response;
+                }
                 return Negotiate.WithStatusCode(HttpStatusCode.ClientClosedRequest).WithReasonPhrase("");
             };
 
